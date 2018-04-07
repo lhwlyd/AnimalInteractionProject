@@ -9,12 +9,13 @@ public abstract class BaseAnimal: MonoBehaviour {
     float hungerLevel;
     float thirstLevel;
     float healthLevel;
+    float speed;
     
-    public abstract void Move();
+    public abstract void Move(Transform destination);
 
-    public abstract void Eat();
+    public abstract void Eat(float foodPoints);
 
-    public abstract void Drink();
+    public abstract void Drink(float waterPoints);
 
     public abstract void Injured(float damage);
 
