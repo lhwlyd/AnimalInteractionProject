@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class BaseAnimal: MonoBehaviour {
-    float agressionLevel;
-    float intimateLevel;
-    float intelligenceLevel;
-    float hungerLevel;
-    float thirstLevel;
-    float healthLevel;
-    float speed;
+    [Range(0, 100)] float agressionLevel,
+        intimateLevel,
+        intelligenceLevel,
+        hungerLevel,
+        thirstLevel,
+        healthLevel,
+        speed;
     
-    public abstract void Move(Transform destination);
+    public abstract void Move(Vector3 destination);
 
     public abstract void Eat(float foodPoints);
 
