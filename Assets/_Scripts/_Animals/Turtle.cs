@@ -26,7 +26,9 @@ public class Turtle : BaseAnimal
 
     public override void Move(Vector3 destination)
     {
-        GetComponent<NavMeshAgent>().SetDestination(destination);
+        agent.SetDestination(destination);
+        
+        
     }
 
     public void wanderAround()
@@ -67,6 +69,8 @@ public class Turtle : BaseAnimal
     private void Start()
     {
         ResetTime();
+        agent = GetComponent<NavMeshAgent>();
+        agent.speed = 2.0f;
     }
 
     private void Update()
