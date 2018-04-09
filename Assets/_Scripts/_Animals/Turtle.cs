@@ -8,6 +8,7 @@ public class Turtle : BaseAnimal
 {
     float timer;
     float maxTime;
+    AnimalGestures animalGesturesRef;
 
     public override void Drink(float waterPoints)
     {
@@ -71,6 +72,8 @@ public class Turtle : BaseAnimal
         ResetTime();
         agent = GetComponent<NavMeshAgent>();
         agent.speed = 2.0f;
+        playerRef = GameObject.FindGameObjectWithTag("Player");
+        animalGesturesRef = playerRef.GetComponent<AnimalGestures>();
     }
 
     private void Update()
@@ -83,6 +86,40 @@ public class Turtle : BaseAnimal
         else {
             timer += Time.deltaTime;
         }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        
+        if (other.CompareTag("leftHand")) {
+            Debug.Log("Grabbing with left hand");
+            if (animalGesturesRef.LeftHandGrabStrength() > 0.5f)
+            {
+                transform.parent = other.transform;
+                GetComponent<NavMeshAgent>().enabled = false;
+            }
+            else {
+                transform.parent = null;
+                GetComponent<NavMeshAgent>().enabled = true;
+            }
+        }
+        else if(other.CompareTag("rightHand")) {
+            Debug.Log("Grabbing with right hand");
+            if (animalGesturesRef.RightHandGrabStrength() > 0.5f)
+            {
+                transform.parent = other.transform;
+                GetComponent<NavMeshAgent>().enabled = false;
+            }
+            else {
+                transform.parent = null;
+                GetComponent<NavMeshAgent>().enabled = true;
+            }
+        }
+    }
+
+    private void OnTriggerExit(Collider other) {
+        transform.parent = null;
+        GetComponent<NavMeshAgent>().enabled = true;
     }
 
 }

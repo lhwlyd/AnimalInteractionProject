@@ -17,23 +17,13 @@ public class AnimalGestures : MonoBehaviour {
         hands = new List<Hand>();
     }
 
-    // Use this for initialization
-    void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
-
     private void FixedUpdate()
     {
         Frame currFrame = controller.Frame(); //The latest frame
         Frame previous = controller.Frame(1); //The previous frame
         hands = currFrame.Hands;
 
-        Debug.Log(hands.Count);
+        //Debug.Log(hands.Count);
 
         if (hands.Count == 1)
         {
@@ -42,13 +32,13 @@ public class AnimalGestures : MonoBehaviour {
             {
                 leftHand = hand0;
                 rightHand = null;
-                Debug.Log("Left hand is only present");
+                //Debug.Log("Left hand is only present");
             }
             else
             {
                 leftHand = null;
                 rightHand = hand0;
-                Debug.Log("Right hand is only present");
+                //Debug.Log("Right hand is only present");
             }
         }
         else if (hands.Count > 1)
@@ -58,21 +48,30 @@ public class AnimalGestures : MonoBehaviour {
 
             if (hand0.IsLeft)
             {
-                Debug.Log("correct order both hands");
+                //Debug.Log("correct order both hands");
                 leftHand = hand0;
                 rightHand = hand1;
             }
             else
             {
-                Debug.Log("Incorrect order both hands");
+                //Debug.Log("Incorrect order both hands");
                 leftHand = hand1;
                 rightHand = hand0;
             }
         }
         else if (hands.Count < 1) {
-            Debug.Log("No hands are present");
+            //Debug.Log("No hands are present");
             leftHand = null;
             rightHand = null;
         }
+    }
+
+    public float LeftHandGrabStrength() {
+        return leftHand == null ?  0.0f : leftHand.GrabStrength;
+    }
+
+    public float RightHandGrabStrength()
+    {
+        return rightHand == null ? 0.0f : rightHand.GrabStrength;
     }
 }

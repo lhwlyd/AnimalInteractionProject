@@ -4,6 +4,10 @@ using UnityEngine;
 using UnityEngine.AI;
 
 public abstract class BaseAnimal: MonoBehaviour {
+
+    [SerializeField]
+    protected GameObject playerRef;
+
     [Range(0, 100)] protected float agressionLevel,
         intimateLevel,
         intelligenceLevel,
