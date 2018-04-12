@@ -10,6 +10,8 @@ public class Turtle : BaseAnimal
     float maxTime;
     AnimalGestures animalGesturesRef;
 
+    bool readyToBeGrabbed;
+
     public override void Drink(float waterPoints)
     {
         throw new System.NotImplementedException();
@@ -93,26 +95,37 @@ public class Turtle : BaseAnimal
         
         if (other.CompareTag("leftHand")) {
             Debug.Log("Grabbing with left hand");
-            if (animalGesturesRef.LeftHandGrabStrength() > 0.5f)
+            if (animalGesturesRef.LeftHandGrabStrength() < 0.3f)
             {
-                transform.parent = other.transform;
-                GetComponent<NavMeshAgent>().enabled = false;
+		        readyToBeGrabbed = true;
             }
             else {
-                transform.parent = null;
-                GetComponent<NavMeshAgent>().enabled = true;
+                if( readyToBeGrabbed && animalGesturesRef.LeftHandGrabStrength() > 0.5f){
+                    transform.parent = other.transform;
+                    GetComponent<NavMeshAgent>().enabled = false;
+                } else {
+                    transform.parent = null;
+                    GetComponent<NavMeshAgent>().enabled = true;
+                    readyToBeGrabbed = false;
+                }
+
             }
         }
         else if(other.CompareTag("rightHand")) {
             Debug.Log("Grabbing with right hand");
-            if (animalGesturesRef.RightHandGrabStrength() > 0.5f)
+            if (animalGesturesRef.RightHandGrabStrength() < 0.3f)
             {
-                transform.parent = other.transform;
-                GetComponent<NavMeshAgent>().enabled = false;
+                readyToBeGrabbed = true;
             }
             else {
-                transform.parent = null;
-                GetComponent<NavMeshAgent>().enabled = true;
+                if(readyToBeGrabbed && animalGesturesRef.RightHandGrabStrength > 0.5f){
+                    transform.parent = other.transform;
+                    GetComponent<NavMeshAgent>().enabled = false;
+                } else {
+                    transform.parent = null;
+                    GetComponent<NavMeshAgent>().enabled = true;
+                    readyToBeGrabbed = false;
+                }
             }
         }
     }
@@ -120,6 +133,7 @@ public class Turtle : BaseAnimal
     private void OnTriggerExit(Collider other) {
         transform.parent = null;
         GetComponent<NavMeshAgent>().enabled = true;
+        readyToBeGrabbed = false;
     }
 
 }
