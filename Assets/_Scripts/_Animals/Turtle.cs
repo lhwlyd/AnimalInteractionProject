@@ -92,48 +92,87 @@ public class Turtle : BaseAnimal
 
     private void OnTriggerEnter(Collider other)
     {
-        
-        if (other.CompareTag("leftHand")) {
-            Debug.Log("Grabbing with left hand");
-            if (animalGesturesRef.LeftHandGrabStrength() < 0.3f)
-            {
-		        readyToBeGrabbed = true;
-            }
-            else {
-                if( readyToBeGrabbed && animalGesturesRef.LeftHandGrabStrength() > 0.5f){
-                    transform.parent = other.transform;
-                    GetComponent<NavMeshAgent>().enabled = false;
-                } else {
-                    transform.parent = null;
-                    GetComponent<NavMeshAgent>().enabled = true;
-                    readyToBeGrabbed = false;
-                }
 
-            }
-        }
-        else if(other.CompareTag("rightHand")) {
-            Debug.Log("Grabbing with right hand");
-            if (animalGesturesRef.RightHandGrabStrength() < 0.3f)
-            {
-                readyToBeGrabbed = true;
-            }
-            else {
-                if(readyToBeGrabbed && animalGesturesRef.RightHandGrabStrength > 0.5f){
-                    transform.parent = other.transform;
-                    GetComponent<NavMeshAgent>().enabled = false;
-                } else {
-                    transform.parent = null;
-                    GetComponent<NavMeshAgent>().enabled = true;
-                    readyToBeGrabbed = false;
+        switch (other.tag) {
+            case "leftHand":
+                Debug.Log("Grabbing with left hand");
+                if (animalGesturesRef.LeftHandGrabStrength() < 0.3f)
+                {
+                    readyToBeGrabbed = true;
                 }
-            }
-        }
+                else
+                {
+                    if (readyToBeGrabbed && animalGesturesRef.LeftHandGrabStrength() > 0.5f)
+                    {
+                        transform.parent = other.transform;
+                        GetComponent<NavMeshAgent>().enabled = false;
+                    }
+                    else
+                    {
+                        transform.parent = null;
+                        GetComponent<NavMeshAgent>().enabled = true;
+                        readyToBeGrabbed = false;
+                    }
+
+                }
+                break;
+
+            case "rightHand":
+                if (other.CompareTag("rightHand"))
+                {
+                    Debug.Log("Grabbing with right hand");
+                    if (animalGesturesRef.RightHandGrabStrength() < 0.3f)
+                    {
+                        readyToBeGrabbed = true;
+                    }
+                    else
+                    {
+                        if (readyToBeGrabbed && animalGesturesRef.RightHandGrabStrength() > 0.5f)
+                        {
+                            transform.parent = other.transform;
+                            GetComponent<NavMeshAgent>().enabled = false;
+                        }
+                        else
+                        {
+                            transform.parent = null;
+                            GetComponent<NavMeshAgent>().enabled = true;
+                            readyToBeGrabbed = false;
+                        }
+                    }
+                }
+                break;
+
+            case "Food":
+                Debug.Log("Begin eating food");
+                object[] tempStorage = new object[2];
+                tempStorage[0] = 5f; // the consumption rate
+                tempStorage[1] = this;
+                other.gameObject.SendMessage("Eaten", tempStorage);
+                break;
+    }
+        
     }
 
     private void OnTriggerExit(Collider other) {
-        transform.parent = null;
-        GetComponent<NavMeshAgent>().enabled = true;
-        readyToBeGrabbed = false;
+
+        switch (other.tag) {
+            case "leftHand":
+            case "rightHand":
+                transform.parent = null;
+                GetComponent<NavMeshAgent>().enabled = true;
+                readyToBeGrabbed = false;
+
+                break;
+
+            case "Food":
+                Debug.Log("Stop eating food");
+                object[] tempStorage = new object[2];
+                tempStorage[0] = 5f; // the consumption rate
+                tempStorage[1] = this;
+                other.gameObject.SendMessage("StopEating", tempStorage);
+                break;
+        }
+        
     }
 
 }
