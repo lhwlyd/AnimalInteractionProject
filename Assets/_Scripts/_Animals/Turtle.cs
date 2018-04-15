@@ -51,6 +51,10 @@ public class Turtle : BaseAnimal
         Move(point);
     }
 
+    public void LookForFood() {
+        
+    }
+
     //https://docs.unity3d.com/540/Documentation/ScriptReference/NavMesh.SamplePosition.html
     bool RandomPoint(Vector3 center, float range, out Vector3 result)
     {
