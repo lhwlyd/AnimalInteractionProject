@@ -11,7 +11,6 @@ public abstract class BaseAnimal: MonoBehaviour {
     [Range(0, 100)] protected float agressionLevel,
         intimateLevel,
         intelligenceLevel,
-        hungerLevel,
         thirstLevel,
         healthLevel,
         speed;
@@ -22,13 +21,18 @@ public abstract class BaseAnimal: MonoBehaviour {
     protected NavMeshPath lastAgentPath;
     protected Vector3 lastAgentDestination;
 
+    protected AnimalState stateManager;
 
     public abstract void Move(Vector3 destination);
 
-    public abstract void Eat(float foodPoints);
+    public abstract void Eat(float foodPoints, Collider food);
 
     public abstract void Drink(float waterPoints);
 
     public abstract void Injured(float damage);
 
+
+    public AnimalState GetStateManager() {
+        return stateManager;
+    }
 } 

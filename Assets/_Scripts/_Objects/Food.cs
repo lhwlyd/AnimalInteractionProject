@@ -8,25 +8,35 @@ public class Food : MonoBehaviour {
     protected float foodLeft, consumeRate;
 
     protected bool beingEaten;
-    protected List<BaseAnimal> eaters;
+    protected Dictionary<BaseAnimal, float> eaters;
 
     private void Start()
     {
-        eaters = new List<BaseAnimal>();
+        foodLeft = 100f;
+        consumeRate = 0f;
+        eaters = new Dictionary<BaseAnimal, float>();
     }
     // Prolly need to disable this script when no animal is eating it
     private void Update()
     {
         if (beingEaten) {
             foodLeft -= consumeRate * Time.deltaTime;
+            foreach (KeyValuePair<BaseAnimal, float> ba in eaters)
+            {
+                if (ba.Key.GetStateManager().GetHungerState() == AnimalState.TOO_FULL)
+                {
+                    StopEating(ba.Value, ba.Key);
+                }
+
+            }
         }
     }
 
     public void Eaten( float consumeRate, BaseAnimal consumer )
-    {
+    {   
         this.consumeRate += consumeRate;
         beingEaten = true;
-        eaters.Add(consumer);
+        eaters[consumer] = consumeRate;
     }
 
     public void StopEating( float consumeRate, BaseAnimal consumer) {
