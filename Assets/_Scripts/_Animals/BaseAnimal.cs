@@ -17,6 +17,11 @@ public abstract class BaseAnimal: MonoBehaviour {
         speed;
     protected NavMeshAgent agent;
 
+    // Nav mesh vars
+    protected Vector3 lastAgentVelocity;
+    protected NavMeshPath lastAgentPath;
+    protected Vector3 lastAgentDestination;
+
 
     public abstract void Move(Vector3 destination);
 

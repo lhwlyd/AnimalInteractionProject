@@ -11,6 +11,7 @@ public class Turtle : BaseAnimal
     AnimalGestures animalGesturesRef;
 
     bool readyToBeGrabbed;
+    Collider grabbingHand;
 
     public override void Drink(float waterPoints)
     {
@@ -30,8 +31,6 @@ public class Turtle : BaseAnimal
     public override void Move(Vector3 destination)
     {
         agent.SetDestination(destination);
-        
-        
     }
 
     public void wanderAround()
@@ -88,6 +87,39 @@ public class Turtle : BaseAnimal
         else {
             timer += Time.deltaTime;
         }
+
+        // Grabbed?
+        if (readyToBeGrabbed) {
+            if (animalGesturesRef.LeftHandGrabStrength() > 0.5f)
+            {
+                Grabbed();
+            }
+            else {
+                ReleaseGrabbing();
+            }
+        }
+    }
+
+    private void Grabbed() {
+        transform.parent = grabbingHand.transform;
+        lastAgentVelocity = agent.velocity;
+        lastAgentPath = agent.path;
+        lastAgentDestination = agent.destination;
+
+        agent.velocity = Vector3.zero;
+        agent.ResetPath();
+    }
+
+    private void ReleaseGrabbing()
+    {
+        grabbingHand = null;
+        transform.parent = null;
+
+        //GetComponent<NavMeshAgent>().enabled = true;
+        readyToBeGrabbed = false;
+
+        agent.SetDestination(lastAgentDestination);
+        agent.velocity = lastAgentVelocity;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -95,6 +127,7 @@ public class Turtle : BaseAnimal
 
         switch (other.tag) {
             case "leftHand":
+                grabbingHand = other;
                 Debug.Log("Grabbing with left hand");
                 if (animalGesturesRef.LeftHandGrabStrength() < 0.3f)
                 {
@@ -102,44 +135,22 @@ public class Turtle : BaseAnimal
                 }
                 else
                 {
-                    if (readyToBeGrabbed && animalGesturesRef.LeftHandGrabStrength() > 0.5f)
-                    {
-                        transform.parent = other.transform;
-                        GetComponent<NavMeshAgent>().enabled = false;
-                    }
-                    else
-                    {
-                        transform.parent = null;
-                        GetComponent<NavMeshAgent>().enabled = true;
-                        readyToBeGrabbed = false;
-                    }
 
                 }
                 break;
 
             case "rightHand":
-                if (other.CompareTag("rightHand"))
+                grabbingHand = other;
+             
+                Debug.Log("Grabbing with right hand");
+                if (animalGesturesRef.RightHandGrabStrength() < 0.3f)
                 {
-                    Debug.Log("Grabbing with right hand");
-                    if (animalGesturesRef.RightHandGrabStrength() < 0.3f)
-                    {
-                        readyToBeGrabbed = true;
-                    }
-                    else
-                    {
-                        if (readyToBeGrabbed && animalGesturesRef.RightHandGrabStrength() > 0.5f)
-                        {
-                            transform.parent = other.transform;
-                            GetComponent<NavMeshAgent>().enabled = false;
-                        }
-                        else
-                        {
-                            transform.parent = null;
-                            GetComponent<NavMeshAgent>().enabled = true;
-                            readyToBeGrabbed = false;
-                        }
-                    }
+                    readyToBeGrabbed = true;
                 }
+                else
+                {
+                }
+                
                 break;
 
             case "Food":
@@ -158,10 +169,7 @@ public class Turtle : BaseAnimal
         switch (other.tag) {
             case "leftHand":
             case "rightHand":
-                transform.parent = null;
-                GetComponent<NavMeshAgent>().enabled = true;
-                readyToBeGrabbed = false;
-
+                ReleaseGrabbing();
                 break;
 
             case "Food":
@@ -174,5 +182,6 @@ public class Turtle : BaseAnimal
         }
         
     }
+
 
 }
