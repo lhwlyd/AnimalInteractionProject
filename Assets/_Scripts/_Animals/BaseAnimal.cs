@@ -25,7 +25,7 @@ public abstract class BaseAnimal: MonoBehaviour {
 
     public abstract void Move(Vector3 destination);
 
-    public abstract void Eat(float foodPoints);
+    public abstract void Eat(float foodPoints, Collider food);
 
     public abstract void Drink(float waterPoints);
 

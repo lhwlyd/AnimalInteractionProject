@@ -12,15 +12,20 @@ public class Turtle : BaseAnimal
 
     bool readyToBeGrabbed;
     Collider grabbingHand;
+    bool eating; // Can create a status class later if it gets complicated
 
     public override void Drink(float waterPoints)
     {
         throw new System.NotImplementedException();
     }
 
-    public override void Eat(float foodPoints)
+    public override void Eat(float foodPoints, Collider food)
     {
-        throw new System.NotImplementedException();
+        eating = true;
+        object[] tempStorage = new object[2];
+        tempStorage[0] = foodPoints; // the consumption rate
+        tempStorage[1] = this;
+        food.gameObject.SendMessage("Eaten", tempStorage);
     }
 
     public override void Injured(float damage)
@@ -72,20 +77,31 @@ public class Turtle : BaseAnimal
     {
         ResetTime();
         agent = GetComponent<NavMeshAgent>();
-        agent.speed = 2.0f;
+        agent.speed = 5.0f;
         playerRef = GameObject.FindGameObjectWithTag("Player");
         animalGesturesRef = playerRef.GetComponent<AnimalGestures>();
+
+        hungerLevel = 100;
     }
 
     private void Update()
     {
-        if (timer >= maxTime)
+        hungerLevel -= 0.1f * Time.deltaTime;
+
+        if (hungerLevel <= 100f)
         {
-            ResetTime();
-            wanderAround();
+            LookForFood();
         }
         else {
-            timer += Time.deltaTime;
+            if (timer >= maxTime)
+            {
+                ResetTime();
+                wanderAround();
+            }
+            else
+            {
+                timer += Time.deltaTime;
+            }
         }
 
         // Grabbed?
@@ -98,6 +114,8 @@ public class Turtle : BaseAnimal
                 ReleaseGrabbing();
             }
         }
+
+        
     }
 
     private void Grabbed() {
@@ -118,8 +136,8 @@ public class Turtle : BaseAnimal
         //GetComponent<NavMeshAgent>().enabled = true;
         readyToBeGrabbed = false;
 
-        agent.SetDestination(lastAgentDestination);
         agent.velocity = lastAgentVelocity;
+        wanderAround();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -155,10 +173,7 @@ public class Turtle : BaseAnimal
 
             case "Food":
                 Debug.Log("Begin eating food");
-                object[] tempStorage = new object[2];
-                tempStorage[0] = 5f; // the consumption rate
-                tempStorage[1] = this;
-                other.gameObject.SendMessage("Eaten", tempStorage);
+                Eat(5f, other);
                 break;
     }
         
