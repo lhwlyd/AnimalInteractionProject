@@ -11,6 +11,7 @@ public class Turtle : BaseAnimal
     AnimalGestures animalGesturesRef;
 
     bool readyToBeGrabbed;
+    bool beingGrabbed;
     Collider grabbingHand;
 
     public override void Drink(float waterPoints)
@@ -18,9 +19,13 @@ public class Turtle : BaseAnimal
         throw new System.NotImplementedException();
     }
 
-    public override void Eat(float foodPoints)
+    public override void Eat(float foodPoints, Collider food)
     {
-        throw new System.NotImplementedException();
+        Debug.Log("Stop eating food");
+        object[] tempStorage = new object[2];
+        tempStorage[0] = foodPoints; // the consumption rate
+        tempStorage[1] = this;
+        food.gameObject.SendMessage("StopEating", tempStorage);
     }
 
     public override void Injured(float damage)
@@ -75,6 +80,9 @@ public class Turtle : BaseAnimal
         agent.speed = 2.0f;
         playerRef = GameObject.FindGameObjectWithTag("Player");
         animalGesturesRef = playerRef.GetComponent<AnimalGestures>();
+
+
+        stateManager = new AnimalState();
     }
 
     private void Update()
@@ -82,7 +90,14 @@ public class Turtle : BaseAnimal
         if (timer >= maxTime)
         {
             ResetTime();
-            wanderAround();
+            switch (stateManager.GetMovingState()) {
+                case 0: // AnimalState.WANDERING
+                    wanderAround();
+                    break;
+
+                default:
+                    break;
+            }
         }
         else {
             timer += Time.deltaTime;
@@ -95,7 +110,9 @@ public class Turtle : BaseAnimal
                 Grabbed();
             }
             else {
-                ReleaseGrabbing();
+                if (beingGrabbed) {
+                    ReleaseGrabbing();
+                }
             }
         }
     }
@@ -108,6 +125,7 @@ public class Turtle : BaseAnimal
 
         agent.velocity = Vector3.zero;
         agent.ResetPath();
+        beingGrabbed = true;
     }
 
     private void ReleaseGrabbing()
@@ -117,6 +135,7 @@ public class Turtle : BaseAnimal
 
         //GetComponent<NavMeshAgent>().enabled = true;
         readyToBeGrabbed = false;
+        beingGrabbed = false;
 
         agent.SetDestination(lastAgentDestination);
         agent.velocity = lastAgentVelocity;
@@ -154,11 +173,9 @@ public class Turtle : BaseAnimal
                 break;
 
             case "Food":
-                Debug.Log("Begin eating food");
-                object[] tempStorage = new object[2];
-                tempStorage[0] = 5f; // the consumption rate
-                tempStorage[1] = this;
-                other.gameObject.SendMessage("Eaten", tempStorage);
+                if ( stateManager.GetHungerState() > AnimalState.TOO_FULL ) {
+                    Eat(5f, other);
+                }
                 break;
     }
         
@@ -173,11 +190,7 @@ public class Turtle : BaseAnimal
                 break;
 
             case "Food":
-                Debug.Log("Stop eating food");
-                object[] tempStorage = new object[2];
-                tempStorage[0] = 5f; // the consumption rate
-                tempStorage[1] = this;
-                other.gameObject.SendMessage("StopEating", tempStorage);
+                
                 break;
         }
         
