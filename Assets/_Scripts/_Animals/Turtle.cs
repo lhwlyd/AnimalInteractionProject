@@ -110,7 +110,7 @@ public class Turtle : BaseAnimal
                 Grabbed();
             }
             else {
-                if (beingGrabbed) {
+                if (beingGrabbed && animalGesturesRef.LeftHandGrabStrength() < 0.3f) {
                     ReleaseGrabbing();
                 }
             }
@@ -190,7 +190,7 @@ public class Turtle : BaseAnimal
                 break;
 
             case "Food":
-                
+                other.gameObject.SendMessage("StopEating", this);
                 break;
         }
         

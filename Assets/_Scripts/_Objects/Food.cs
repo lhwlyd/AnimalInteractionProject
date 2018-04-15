@@ -12,6 +12,8 @@ public class Food : MonoBehaviour {
 
     private void Start()
     {
+        foodLeft = 100f;
+        consumeRate = 0f;
         eaters = new Dictionary<BaseAnimal, float>();
     }
     // Prolly need to disable this script when no animal is eating it
