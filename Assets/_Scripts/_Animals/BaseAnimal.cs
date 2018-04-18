@@ -35,4 +35,15 @@ public abstract class BaseAnimal: MonoBehaviour {
     public AnimalState GetStateManager() {
         return stateManager;
     }
+
+    public void RecordAgentState(ref NavMeshAgent agent) {
+        lastAgentVelocity = agent.velocity;
+        lastAgentPath = agent.path;
+        lastAgentDestination = agent.destination;
+    }
+
+    public void RestoreAgentState(ref NavMeshAgent agent) {
+        agent.SetDestination(lastAgentDestination);
+        agent.velocity = lastAgentVelocity;
+    }
 } 

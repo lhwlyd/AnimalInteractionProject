@@ -6,6 +6,7 @@ public class FoodCan : MonoBehaviour {
 
     private int foodLeft;
     public GameObject food;
+    public Transform generatePoint;
 
     private float foodOutTimer;
     private float time;
@@ -19,14 +20,20 @@ public class FoodCan : MonoBehaviour {
     void Update () {
         time += Time.deltaTime;
         // Need to fix this
-        if (this.transform.rotation.z < -90f && this.transform.rotation.z > -270f)
+        if (Vector3.Dot(transform.up, Vector3.down) > 0)
         {
             if (time >= foodOutTimer) {
-                Instantiate(food, transform);
+                GameObject newFood = Instantiate(food, generatePoint);
+                newFood.transform.SetParent(null);
                 foodLeft--;
                 time = 0;
             }
             
         }
 	}
+
+    private void OnTriggerEnter(Collider other)
+    {
+        
+    }
 }

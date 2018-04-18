@@ -6,6 +6,7 @@ TagManager:
   tags:
   - leftHand
   - rightHand
+  - Food
   layers:
   - Default
   - TransparentFX

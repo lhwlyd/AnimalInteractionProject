@@ -8,11 +8,6 @@ public class Turtle : BaseAnimal
 {
     float timer;
     float maxTime;
-    AnimalGestures animalGesturesRef;
-
-    bool readyToBeGrabbed;
-    bool beingGrabbed;
-    Collider grabbingHand;
 
     public override void Drink(float waterPoints)
     {
@@ -79,8 +74,6 @@ public class Turtle : BaseAnimal
         agent = GetComponent<NavMeshAgent>();
         agent.speed = 2.0f;
         playerRef = GameObject.FindGameObjectWithTag("Player");
-        animalGesturesRef = playerRef.GetComponent<AnimalGestures>();
-
 
         stateManager = new AnimalState();
     }
@@ -103,92 +96,26 @@ public class Turtle : BaseAnimal
             timer += Time.deltaTime;
         }
 
-        // Grabbed?
-        if (readyToBeGrabbed) {
-            if (animalGesturesRef.LeftHandGrabStrength() > 0.5f)
-            {
-                Grabbed();
-            }
-            else {
-                if (beingGrabbed && animalGesturesRef.LeftHandGrabStrength() < 0.3f) {
-                    ReleaseGrabbing();
-                }
-            }
-        }
-    }
-
-    private void Grabbed() {
-        transform.parent = grabbingHand.transform;
-        lastAgentVelocity = agent.velocity;
-        lastAgentPath = agent.path;
-        lastAgentDestination = agent.destination;
-
-        agent.velocity = Vector3.zero;
-        agent.ResetPath();
-        beingGrabbed = true;
-    }
-
-    private void ReleaseGrabbing()
-    {
-        grabbingHand = null;
-        transform.parent = null;
-
-        //GetComponent<NavMeshAgent>().enabled = true;
-        readyToBeGrabbed = false;
-        beingGrabbed = false;
-
-        agent.SetDestination(lastAgentDestination);
-        agent.velocity = lastAgentVelocity;
     }
 
     private void OnTriggerEnter(Collider other)
     {
 
-        switch (other.tag) {
-            case "leftHand":
-                grabbingHand = other;
-                Debug.Log("Grabbing with left hand");
-                if (animalGesturesRef.LeftHandGrabStrength() < 0.3f)
-                {
-                    readyToBeGrabbed = true;
-                }
-                else
-                {
-
-                }
-                break;
-
-            case "rightHand":
-                grabbingHand = other;
-             
-                Debug.Log("Grabbing with right hand");
-                if (animalGesturesRef.RightHandGrabStrength() < 0.3f)
-                {
-                    readyToBeGrabbed = true;
-                }
-                else
-                {
-                }
-                
-                break;
-
+        switch (other.tag)
+        {
+            // Grab script moved to "Grabbale.cs"
             case "Food":
-                if ( stateManager.GetHungerState() > AnimalState.TOO_FULL ) {
+                if (stateManager.GetHungerState() > AnimalState.TOO_FULL)
+                {
                     Eat(5f, other);
                 }
                 break;
-    }
-        
-    }
+        }
 
+    }
     private void OnTriggerExit(Collider other) {
 
         switch (other.tag) {
-            case "leftHand":
-            case "rightHand":
-                ReleaseGrabbing();
-                break;
-
             case "Food":
                 other.gameObject.SendMessage("StopEating", this);
                 break;
