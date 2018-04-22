@@ -12,6 +12,11 @@ public class StateMachine : MonoBehaviour {
     public void ChangeState(IState newState) {
         if (currentlyRunningState != null) {
             currentlyRunningState.Exit();
+            if (newState.GetType().Equals(currentlyRunningState.GetType()))
+            {
+                // Do nothing, duplicate states
+                return;
+            }
         }
         previousState = currentlyRunningState;
         currentlyRunningState = newState;
@@ -27,5 +32,9 @@ public class StateMachine : MonoBehaviour {
         currentlyRunningState.Exit();
         currentlyRunningState = previousState;
         currentlyRunningState.Enter();
+    }
+
+    public IState GetCurrentState() {
+        return currentlyRunningState;
     }
 }

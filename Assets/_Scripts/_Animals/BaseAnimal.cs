@@ -15,6 +15,7 @@ public abstract class BaseAnimal: MonoBehaviour {
 
     [SerializeField]
     [Range(0, 100)] protected float agressionLevel,
+        hungerLevel,
         intimateLevel,
         intelligenceLevel,
         thirstLevel,
@@ -47,5 +48,9 @@ public abstract class BaseAnimal: MonoBehaviour {
     public void RestoreAgentState(ref NavMeshAgent agent) {
         agent.SetDestination(lastAgentDestination);
         agent.velocity = lastAgentVelocity;
+    }
+
+    public float GetHungerLevel() {
+        return hungerLevel;
     }
 } 

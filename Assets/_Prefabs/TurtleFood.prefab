@@ -24,7 +24,7 @@ GameObject:
   - component: {fileID: 23792121320496980}
   - component: {fileID: 114679919308742324}
   - component: {fileID: 54785566515596086}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: TurtleFood
   m_TagString: Food
   m_Icon: {fileID: 0}

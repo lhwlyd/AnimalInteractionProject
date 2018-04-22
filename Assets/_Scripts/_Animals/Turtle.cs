@@ -17,6 +17,7 @@ public class Turtle : BaseAnimal
     public override void Eat(float foodPoints, Collider food)
     {
         Debug.Log("Start eating food");
+        //stateMachine.ChangeState();
         KeyValuePair<float, BaseAnimal> tempStorage = new KeyValuePair<float, BaseAnimal>(
             foodPoints, this);
         food.gameObject.SendMessage("Eaten", tempStorage);
@@ -57,6 +58,11 @@ public class Turtle : BaseAnimal
     private void Update()
     {
         this.stateMachine.ExecuteStateUpdate();
+        if (hungerLevel < 30f)
+        {
+            this.stateMachine.ChangeState(
+                new SearchForFood(foodItemsLayer, this, speed*15f, "Food", agent));
+        }
     }
 
     private void OnTriggerEnter(Collider other)

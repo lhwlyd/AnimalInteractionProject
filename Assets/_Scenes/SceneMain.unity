@@ -1493,6 +1493,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerRef: {fileID: 0}
+  foodItemsLayer:
+    serializedVersion: 2
+    m_Bits: 256
+  foodDetectRange: 20
+  agressionLevel: 0
+  hungerLevel: 97.5
+  intimateLevel: 100
+  intelligenceLevel: 40.2
+  thirstLevel: 100
+  healthLevel: 100
+  speed: 1
 --- !u!195 &493539466
 NavMeshAgent:
   m_ObjectHideFlags: 0

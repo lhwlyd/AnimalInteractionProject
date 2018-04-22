@@ -36,10 +36,11 @@ public class SearchForFood : IState
             }
             break;
         }
+
+        // No food found, stay where it is
     }
 
     public void Exit()
     {
-        throw new System.NotImplementedException();
     }
 }
