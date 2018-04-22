@@ -53,4 +53,12 @@ public abstract class BaseAnimal: MonoBehaviour {
     public float GetHungerLevel() {
         return hungerLevel;
     }
+
+    public void SetBusy(int busyType) {
+        if (busyType == 0) {
+            // Being grabbed
+            this.stateMachine.ChangeState(new Grabbed(agent));
+        }
+
+    }
 } 

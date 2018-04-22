@@ -33,10 +33,12 @@ public class Grabable : MonoBehaviour {
             }
             else
             {
+                /*
                 if (beingGrabbed && animalGesturesRef.LeftHandGrabStrength() < 0.3f)
                 {
                     ReleaseGrabbing();
                 }
+                */
             }
         }
     }
@@ -46,11 +48,12 @@ public class Grabable : MonoBehaviour {
         if ( agent != null ) {
             GetComponent<BaseAnimal>().RecordAgentState(ref agent);
         }
+        Debug.Log(grabbingHand);
         transform.parent = grabbingHand.transform;
 
-        agent.velocity = Vector3.zero;
-        agent.ResetPath();
         beingGrabbed = true;
+
+        this.gameObject.GetComponent<BaseAnimal>().SetBusy(0);
     }
 
     private void ReleaseGrabbing()
@@ -85,19 +88,19 @@ public class Grabable : MonoBehaviour {
                 }
                 break;
 
-            case "rightHand":
-                grabbingHand = other;
+            //case "rightHand":
+            //    grabbingHand = other;
 
-                Debug.Log("Grabbing with right hand");
-                if (animalGesturesRef.RightHandGrabStrength() < 0.3f)
-                {
-                    readyToBeGrabbed = true;
-                }
-                else
-                {
-                }
+            //    Debug.Log("Grabbing with right hand");
+            //    if (animalGesturesRef.RightHandGrabStrength() < 0.3f)
+            //    {
+            //        readyToBeGrabbed = true;
+            //    }
+            //    else
+            //    {
+            //    }
 
-                break;
+            //    break;
         }
 
     }
@@ -109,7 +112,7 @@ public class Grabable : MonoBehaviour {
         {
             case "leftHand":
             case "rightHand":
-                ReleaseGrabbing();
+                //ReleaseGrabbing();
                 break;
         }
 

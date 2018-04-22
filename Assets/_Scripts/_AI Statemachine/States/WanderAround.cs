@@ -26,6 +26,7 @@ public class WanderAround : IState
                 if (!agent.hasPath || agent.velocity.sqrMagnitude == 0f)
                 {
                     MoveToNewPlace();
+                    Debug.Log("moving...");
                 }
             }
         }
