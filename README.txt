@@ -1,1 +1,1 @@
-Hi, this project is under development of Carlos Chulo @ cchulo@ucsd.edu and Roy Y. Luo @ yil623@ucsd.edu
+Hi, this project is under development by Carlos Chulo @ cchulo@ucsd.edu and Roy Y. Luo @ yil623@ucsd.edu

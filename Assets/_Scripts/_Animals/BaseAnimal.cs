@@ -3,11 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+[RequireComponent(typeof(NavMeshAgent))]
 public abstract class BaseAnimal: MonoBehaviour {
 
     [SerializeField]
     protected GameObject playerRef;
+    [SerializeField]
+    protected LayerMask foodItemsLayer;
+    [SerializeField]
+    protected float foodDetectRange;
 
+    [SerializeField]
     [Range(0, 100)] protected float agressionLevel,
         intimateLevel,
         intelligenceLevel,
@@ -21,7 +27,8 @@ public abstract class BaseAnimal: MonoBehaviour {
     protected NavMeshPath lastAgentPath;
     protected Vector3 lastAgentDestination;
 
-    protected AnimalState stateManager;
+    //protected AnimalState stateManager;
+    protected StateMachine stateMachine = new StateMachine();
 
     public abstract void Move(Vector3 destination);
 
@@ -30,11 +37,6 @@ public abstract class BaseAnimal: MonoBehaviour {
     public abstract void Drink(float waterPoints);
 
     public abstract void Injured(float damage);
-
-
-    public AnimalState GetStateManager() {
-        return stateManager;
-    }
 
     public void RecordAgentState(ref NavMeshAgent agent) {
         lastAgentVelocity = agent.velocity;

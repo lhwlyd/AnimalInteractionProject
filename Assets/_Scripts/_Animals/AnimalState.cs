@@ -2,12 +2,31 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/****** Use the StateMachine instead ********/
 public class AnimalState : MonoBehaviour {
-    [Range(0,100)]private float hungerPoints;
+    [Range(0, 100)] public float hungerPoints;
 
-    private int hungerState,
+    private int baseState,
+        hungerState,
         movingState;
 
+    /****** Base state ********/
+    public readonly static int IDLE = 0;
+    public readonly static int SLEEPNIG = 1;
+    public readonly static int EATING = 2;
+    public readonly static int WALKING = 3;
+
+    public int GetBaseState()
+    {
+        return this.baseState;
+    }
+
+    public void SetBaseState(int state) {
+        this.baseState = state;
+    }
+
+
+    /****** Hunger state ******/
     public readonly static int LOOKING_FOR_FOOD = 0;
     public readonly static int CASUALLY_EATING = 1;
     public readonly static int TOO_FULL = 2;
@@ -28,7 +47,7 @@ public class AnimalState : MonoBehaviour {
         return this.hungerState;
     }
 
-
+    /****** Walking state ******/
     public readonly static int WANDERING = 0;
     public readonly static int WALKING_FOR_FOOD = 1;
     public readonly static int TIRED = 2;
@@ -43,4 +62,5 @@ public class AnimalState : MonoBehaviour {
         this.hungerState = TOO_FULL;
         this.movingState = WANDERING;
     }
+
 }

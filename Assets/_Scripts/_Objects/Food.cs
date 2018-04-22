@@ -23,24 +23,27 @@ public class Food : MonoBehaviour {
             foodLeft -= consumeRate * Time.deltaTime;
             foreach (KeyValuePair<BaseAnimal, float> ba in eaters)
             {
+                /*
                 if (ba.Key.GetStateManager().GetHungerState() == AnimalState.TOO_FULL)
                 {
-                    StopEating(ba.Value, ba.Key);
+                    StopEating(ba.Key);
                 }
+                */
 
             }
         }
     }
 
-    public void Eaten( float consumeRate, BaseAnimal consumer )
+    public void Eaten(KeyValuePair<float, BaseAnimal> tempStorage )
     {   
-        this.consumeRate += consumeRate;
+        this.consumeRate += tempStorage.Key;
         beingEaten = true;
-        eaters[consumer] = consumeRate;
+        eaters[tempStorage.Value] = consumeRate;
     }
 
-    public void StopEating( float consumeRate, BaseAnimal consumer) {
-        this.consumeRate -= consumeRate;
+    public void StopEating( BaseAnimal consumer) {
+        Debug.Log(eaters[consumer]);
+        this.consumeRate -= eaters[consumer];
         eaters.Remove(consumer);
         beingEaten = (eaters.Count > 0);
     }

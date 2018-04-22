@@ -17,7 +17,6 @@ public class Grabable : MonoBehaviour {
     private void Start()
     {
         agent = GetComponent<NavMeshAgent>();
-        agent.speed = 2.0f;
         playerRef = GameObject.FindGameObjectWithTag("Player");
         animalGesturesRef = playerRef.GetComponent<AnimalGestures>();
     }
