@@ -5,116 +5,91 @@ using UnityEngine.AI;
 
 public class Grabable : MonoBehaviour {
 
-    bool readyToBeGrabbed;
-    bool beingGrabbed;
-    Collider grabbingHand;
-    AnimalGestures animalGesturesRef;
+    bool readyToBeGrabbed = false;
+    //bool beingGrabbed;
+    public GameObject GrabbingHandRef;
+    public GameObject LGrabbingHandRef;
+    public GameObject RGrabbingHandRef;
 
-    NavMeshAgent agent;
-    [SerializeField]
-    GameObject playerRef;
-
-    private void Start()
-    {
-        agent = GetComponent<NavMeshAgent>();
-        playerRef = GameObject.FindGameObjectWithTag("Player");
-        animalGesturesRef = playerRef.GetComponent<AnimalGestures>();
+    private void Start() {
+        LGrabbingHandRef = GameObject.FindGameObjectWithTag("leftHand");
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
-
-        // Grabbed?
-        if (readyToBeGrabbed)
+        // if there is a hand in the scene, and this object is ready to be grabbed...
+        if (GrabbingHandRef != null && readyToBeGrabbed)
         {
-            if (animalGesturesRef.LeftHandGrabStrength() > 0.5f)
+
+            // if the hand is not disabled (within LoS of the Leap)...
+            if (GrabbingHandRef.activeSelf == true)
             {
-                Grabbed();
-            }
-            else
-            {
-                /*
-                if (beingGrabbed && animalGesturesRef.LeftHandGrabStrength() < 0.3f)
+
+                var gesture = GetHandGesture(GrabbingHandRef);
+
+                // if the gesture is not null (we did it right)...
+                if (gesture != null)
                 {
-                    ReleaseGrabbing();
+                    Debug.Log("WE IN HERE...");
+                    if (gesture.IsGrabbing())
+                    {
+                        Debug.Log("still grabbing...");
+                        Grabbed();
+                    }
+                    else
+                    {
+                        ReleaseGrabbing();
+                    }
                 }
-                */
             }
         }
+        else if (!readyToBeGrabbed) ReleaseGrabbing();
     }
 
     private void Grabbed()
     {
-        if ( agent != null ) {
-            GetComponent<BaseAnimal>().RecordAgentState(ref agent);
-        }
-        Debug.Log(grabbingHand);
-        transform.parent = grabbingHand.transform;
-
-        beingGrabbed = true;
-
-        this.gameObject.GetComponent<BaseAnimal>().SetBusy(0);
+        Debug.Log("Grabbing");
+        transform.parent = GrabbingHandRef.transform;
     }
 
     private void ReleaseGrabbing()
     {
-        grabbingHand = null;
+        Debug.Log("RELEASING!!!!");
+        //GrabbingHandRef = null;
         transform.parent = null;
-
-        //GetComponent<NavMeshAgent>().enabled = true;
-        readyToBeGrabbed = false;
-        beingGrabbed = false;
-
-        if (agent != null) {
-            GetComponent<BaseAnimal>().RestoreAgentState(ref agent);
-        }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-
         switch (other.tag)
         {
             case "leftHand":
-                grabbingHand = other;
-                Debug.Log("Grabbing with left hand");
-                if (animalGesturesRef.LeftHandGrabStrength() < 0.3f)
-                {
-                    readyToBeGrabbed = true;
-                }
-                else
-                {
-
-                }
+                PrepareToGrab(other.gameObject);
                 break;
-
-            //case "rightHand":
-            //    grabbingHand = other;
-
-            //    Debug.Log("Grabbing with right hand");
-            //    if (animalGesturesRef.RightHandGrabStrength() < 0.3f)
-            //    {
-            //        readyToBeGrabbed = true;
-            //    }
-            //    else
-            //    {
-            //    }
-
-            //    break;
         }
 
     }
 
-    private void OnTriggerExit(Collider other)
+    
+
+    private void OnTriggerExit(Collider other){
+        readyToBeGrabbed = false;
+    }
+
+    private void PrepareToGrab(GameObject handRef) {
+        GrabbingHandRef = handRef;
+        readyToBeGrabbed = true;
+    }
+
+    private IHandGesture GetHandGesture(GameObject HandRef)
     {
+        var LHandGestureRef = HandRef.GetComponent<LHandGesture>();
+        var RHandGestureRef = HandRef.GetComponent<RHandGesture>();
+        Debug.Log(LHandGestureRef);
+        Debug.Log(RHandGestureRef);
 
-        switch (other.tag)
-        {
-            case "leftHand":
-            case "rightHand":
-                //ReleaseGrabbing();
-                break;
-        }
-
+        if (LHandGestureRef != null) return LHandGestureRef;
+        if (RHandGestureRef != null) return RHandGestureRef;
+        else return null;
     }
 }

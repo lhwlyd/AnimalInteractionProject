@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using Leap;
 
+/**
+ * This script is responsible for capturing the raw Leap input, to be used
+ * by other scripts in order to translate this data into appropriate gestures.
+ */
 public class AnimalGestures : MonoBehaviour
 {
 

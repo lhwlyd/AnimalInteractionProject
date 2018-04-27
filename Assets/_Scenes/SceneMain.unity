@@ -1704,7 +1704,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8af50c5a390400449651604a9a49460, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerRef: {fileID: 0}
+  GrabbingHandRef: {fileID: 0}
+  LGrabbingHandRef: {fileID: 0}
+  RGrabbingHandRef: {fileID: 0}
 --- !u!135 &493539471
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -2836,6 +2838,10 @@ Prefab:
       propertyPath: m_TagString
       value: Turtle
       objectReference: {fileID: 0}
+    - target: {fileID: 1206511787925574, guid: 3b1e3e9155d404942bc65d9aa80120ba, type: 2}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 3b1e3e9155d404942bc65d9aa80120ba, type: 2}
   m_IsPrefabParent: 0
@@ -3929,7 +3935,7 @@ CapsuleCollider:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1489997086}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   m_Radius: 0.5
   m_Height: 2
@@ -3949,7 +3955,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1489997086}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.2953, y: 1.88, z: -2.38}
+  m_LocalPosition: {x: -0.197, y: 1.88, z: -2.38}
   m_LocalScale: {x: 0.363428, y: 0.32333753, z: 0.3660547}
   m_Children:
   - {fileID: 333434060}
@@ -3967,7 +3973,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8af50c5a390400449651604a9a49460, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerRef: {fileID: 0}
+  GrabbingHandRef: {fileID: 0}
+  LGrabbingHandRef: {fileID: 0}
+  RGrabbingHandRef: {fileID: 0}
+--- !u!1 &1745649801 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 121614, guid: 23f2cce114628a448bfeaae171b4c0c0, type: 2}
+  m_PrefabInternal: {fileID: 455796733}
+--- !u!114 &1745649805
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1745649801}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9eeb5870507345345a913c8dd277b38f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerAnimalGesturesRef: {fileID: 0}
 --- !u!1 &1757356616
 GameObject:
   m_ObjectHideFlags: 0
