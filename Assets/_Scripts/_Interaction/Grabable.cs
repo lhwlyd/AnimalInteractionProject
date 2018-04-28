@@ -54,7 +54,7 @@ public class Grabable : MonoBehaviour {
 
     private void ReleaseGrabbing()
     {
-        Debug.Log("RELEASING!!!!");
+        //Debug.Log("RELEASING!!!!");
         //GrabbingHandRef = null;
         transform.parent = null;
     }

@@ -20,6 +20,8 @@ public abstract class BaseAnimal: MonoBehaviour {
         intelligenceLevel,
         thirstLevel,
         healthLevel,
+        foodConsumingRate,
+        waterConsumingRate,
         speed;
     protected NavMeshAgent agent;
 
@@ -57,8 +59,14 @@ public abstract class BaseAnimal: MonoBehaviour {
     public void SetBusy(int busyType) {
         if (busyType == 0) {
             // Being grabbed
+            RecordAgentState(ref agent);
             this.stateMachine.ChangeState(new Grabbed(agent));
         }
 
+    }
+
+    public void SwitchToPreviousState() {
+        stateMachine.SwtichToPreviousState();
+        RestoreAgentState(ref agent);
     }
 } 

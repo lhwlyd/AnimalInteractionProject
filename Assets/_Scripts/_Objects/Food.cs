@@ -25,13 +25,23 @@ public class Food : MonoBehaviour {
     }
 
     public void StopEating( BaseAnimal consumer) {
-        Debug.Log(eaters[consumer]);
+        Debug.Log("Animal :" + eaters[consumer] + " just stopped eating!");
         this.consumeRate -= eaters[consumer];
         eaters.Remove(consumer);
         beingEaten = (eaters.Count > 0);
+        consumer.SwitchToPreviousState();
     }
 
-    public void Consumed( float consumedAmount ) {
-        this.foodLeft -= consumedAmount;
+    public void Consumed(float rate) {
+        if (this.foodLeft > 0)
+        {
+            this.foodLeft -= Time.deltaTime * rate;
+        }
+        else {
+            foreach (KeyValuePair<BaseAnimal, float> pair in eaters) {
+                Debug.Log(pair.Key);
+                StopEating(pair.Key);
+            }
+        }
     }
 }

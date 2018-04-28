@@ -19,11 +19,13 @@ public class EatingFood : IState
     public void Enter()
     {
         food.Eaten(consumingRate, animal);
+        animal.RecordAgentState(ref agent);
+        agent.SetDestination(food.gameObject.transform.position);
     }
 
     public void Execute()
     {
-        //food.Consumed();
+        food.Consumed(consumingRate);
     }
 
     public void Exit()
