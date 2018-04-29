@@ -1742,6 +1742,20 @@ MonoBehaviour:
   GrabbingHandRef: {fileID: 0}
   LGrabbingHandRef: {fileID: 0}
   RGrabbingHandRef: {fileID: 0}
+--- !u!114 &493539468
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 493539464}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8af50c5a390400449651604a9a49460, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GrabbingHandRef: {fileID: 0}
+  LGrabbingHandRef: {fileID: 0}
+  RGrabbingHandRef: {fileID: 0}
 --- !u!135 &493539471
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -3946,6 +3960,7 @@ GameObject:
   - component: {fileID: 1489997088}
   - component: {fileID: 1489997087}
   - component: {fileID: 1489997092}
+  - component: {fileID: 1489997093}
   m_Layer: 9
   m_Name: TurtleFoodCan
   m_TagString: Untagged
@@ -4041,6 +4056,20 @@ MonoBehaviour:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1489997086}
   m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8af50c5a390400449651604a9a49460, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GrabbingHandRef: {fileID: 0}
+  LGrabbingHandRef: {fileID: 0}
+  RGrabbingHandRef: {fileID: 0}
+--- !u!114 &1489997093
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1489997086}
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a8af50c5a390400449651604a9a49460, type: 3}
   m_Name: 
