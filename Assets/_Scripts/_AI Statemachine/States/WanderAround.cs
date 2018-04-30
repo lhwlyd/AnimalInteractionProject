@@ -26,7 +26,6 @@ public class WanderAround : IState
                 if (!agent.hasPath || agent.velocity.sqrMagnitude == 0f)
                 {
                     MoveToNewPlace();
-                    Debug.Log("moving...");
                 }
             }
         }
@@ -62,7 +61,6 @@ public class WanderAround : IState
             Debug.DrawRay(point, Vector3.up, Color.blue, 1.0f);
         }
 
-        Debug.Log(point);
         agent.SetDestination(point);
         agent.speed = speed;
     }

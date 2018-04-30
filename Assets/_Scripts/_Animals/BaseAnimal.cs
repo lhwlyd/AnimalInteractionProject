@@ -56,6 +56,20 @@ public abstract class BaseAnimal: MonoBehaviour {
         return hungerLevel;
     }
 
+    public void UpdateHungerLevel(float update) {
+        this.hungerLevel += update;
+    }
+
+    public float GetThirstLevel()
+    {
+        return thirstLevel;
+    }
+
+    public void UpdateThirstLevel(float update)
+    {
+        this.thirstLevel += update;
+    }
+
     public void SetBusy(int busyType) {
         if (busyType == 0) {
             // Being grabbed
@@ -68,5 +82,9 @@ public abstract class BaseAnimal: MonoBehaviour {
     public void SwitchToPreviousState() {
         stateMachine.SwtichToPreviousState();
         RestoreAgentState(ref agent);
+    }
+
+    public StateMachine GetStateMachine() {
+        return this.stateMachine;
     }
 } 

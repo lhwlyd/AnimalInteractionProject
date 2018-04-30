@@ -16,20 +16,22 @@ public class EatingFood : IState
         this.agent = agent;
         this.animal = animal;
     }
+
     public void Enter()
     {
         food.Eaten(consumingRate, animal);
         animal.RecordAgentState(ref agent);
         agent.SetDestination(food.gameObject.transform.position);
+        Debug.Log(animal.name + " start eating");
     }
 
     public void Execute()
     {
-        food.Consumed(consumingRate);
     }
 
     public void Exit()
     {
         food.StopEating(animal);
+        Debug.Log(animal.name + " stopped eating");
     }
 }

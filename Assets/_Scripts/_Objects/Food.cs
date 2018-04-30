@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Food : MonoBehaviour {
 
+    [SerializeField]
     [Range(0, 100)]
     protected float foodLeft, consumeRate;
 
@@ -21,27 +22,41 @@ public class Food : MonoBehaviour {
     {   
         this.consumeRate += consumingRate;
         beingEaten = true;
-        eaters[consumer] = consumeRate;
+        eaters.Add(consumer, consumingRate);
     }
 
     public void StopEating( BaseAnimal consumer) {
-        Debug.Log("Animal :" + eaters[consumer] + " just stopped eating!");
-        this.consumeRate -= eaters[consumer];
+        //this.consumeRate -= eaters[consumer];
         eaters.Remove(consumer);
         beingEaten = (eaters.Count > 0);
-        consumer.SwitchToPreviousState();
+        //consumer.SwitchToPreviousState();
     }
 
     public void Consumed(float rate) {
         if (this.foodLeft > 0)
         {
             this.foodLeft -= Time.deltaTime * rate;
+            foreach (KeyValuePair<BaseAnimal, float> pair in eaters)
+            {
+                pair.Key.UpdateHungerLevel(Time.deltaTime * pair.Value);
+            }
         }
         else {
             foreach (KeyValuePair<BaseAnimal, float> pair in eaters) {
-                Debug.Log(pair.Key);
-                StopEating(pair.Key);
+                pair.Key.SwitchToPreviousState();
+                Debug.Log(pair.Key.GetStateMachine().GetCurrentState().GetType());
             }
+
+            Destroy(this.gameObject);
         }
+    }
+
+    private void Update()
+    {
+        if (!beingEaten)
+            return;
+
+        Consumed(consumeRate);
+        beingEaten = eaters.Count > 0;
     }
 }

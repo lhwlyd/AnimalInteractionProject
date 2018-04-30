@@ -111,6 +111,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53a559a330f753746a6d4cf64b16088e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  foodLeft: 100
+  consumeRate: 0
 --- !u!135 &135086797848150358
 SphereCollider:
   m_ObjectHideFlags: 1

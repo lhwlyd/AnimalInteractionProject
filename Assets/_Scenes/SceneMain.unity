@@ -1575,24 +1575,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77bf429540b602a4c904405813c82bdb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  grabbableLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  grabTriggerDistance: 0.7
-  releaseTriggerDistance: 1.2
-  grabObjectDistance: 2
-  releaseBreakDistance: 0.3
-  releaseStrengthCurve:
-    serializedVersion: 2
-    m_Curve: []
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  rotationFiltering: 0.4
-  positionFiltering: 0.4
-  minConfidence: 0.1
-  maxMovement: {x: Infinity, y: Infinity, z: Infinity}
-  minMovement: {x: -Infinity, y: -Infinity, z: -Infinity}
 --- !u!1 &459374008
 GameObject:
   m_ObjectHideFlags: 0
@@ -1699,13 +1681,13 @@ MonoBehaviour:
     m_Bits: 256
   foodDetectRange: 20
   agressionLevel: 0
-  hungerLevel: 97.5
+  hungerLevel: 21.8
   intimateLevel: 100
   intelligenceLevel: 40.2
   thirstLevel: 100
   healthLevel: 100
-  foodConsumingRate: 0
-  waterConsumingRate: 0
+  foodConsumingRate: 20
+  waterConsumingRate: 10
   speed: 1
 --- !u!195 &493539466
 NavMeshAgent:
@@ -2651,24 +2633,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77bf429540b602a4c904405813c82bdb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  grabbableLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  grabTriggerDistance: 0.7
-  releaseTriggerDistance: 1.2
-  grabObjectDistance: 2
-  releaseBreakDistance: 0.3
-  releaseStrengthCurve:
-    serializedVersion: 2
-    m_Curve: []
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  rotationFiltering: 0.4
-  positionFiltering: 0.4
-  minConfidence: 0.1
-  maxMovement: {x: Infinity, y: Infinity, z: Infinity}
-  minMovement: {x: -Infinity, y: -Infinity, z: -Infinity}
 --- !u!1 &848492346
 GameObject:
   m_ObjectHideFlags: 0
