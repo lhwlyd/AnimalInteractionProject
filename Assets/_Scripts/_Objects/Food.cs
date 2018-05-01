@@ -29,34 +29,21 @@ public class Food : MonoBehaviour {
         //this.consumeRate -= eaters[consumer];
         eaters.Remove(consumer);
         beingEaten = (eaters.Count > 0);
-        //consumer.SwitchToPreviousState();
     }
 
-    public void Consumed(float rate) {
+    public void Consumed(BaseAnimal animal) {
         if (this.foodLeft > 0)
         {
-            this.foodLeft -= Time.deltaTime * rate;
-            foreach (KeyValuePair<BaseAnimal, float> pair in eaters)
-            {
-                pair.Key.UpdateHungerLevel(Time.deltaTime * pair.Value);
-            }
+            float update = Time.deltaTime * eaters[animal];
+            this.foodLeft -= update;
+            animal.UpdateHungerLevel(update);
         }
         else {
-            foreach (KeyValuePair<BaseAnimal, float> pair in eaters) {
-                pair.Key.SwitchToPreviousState();
-                Debug.Log(pair.Key.GetStateMachine().GetCurrentState().GetType());
+            animal.SwitchToPreviousState();
+            if(eaters.Count == 0){
+                Destroy(this.gameObject);
             }
-
-            Destroy(this.gameObject);
         }
     }
 
-    private void Update()
-    {
-        if (!beingEaten)
-            return;
-
-        Consumed(consumeRate);
-        beingEaten = eaters.Count > 0;
-    }
 }

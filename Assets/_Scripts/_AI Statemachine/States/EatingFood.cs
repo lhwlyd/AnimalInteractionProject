@@ -27,11 +27,13 @@ public class EatingFood : IState
 
     public void Execute()
     {
+        food.Consumed(animal);
     }
 
     public void Exit()
     {
         food.StopEating(animal);
+        animal.RestoreAgentState(ref agent);
         Debug.Log(animal.name + " stopped eating");
     }
 }
