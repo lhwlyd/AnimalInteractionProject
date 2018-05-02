@@ -37,8 +37,10 @@ public class Food : MonoBehaviour {
             float update = Time.deltaTime * eaters[animal];
             this.foodLeft -= update;
             animal.UpdateHungerLevel(update);
+	        Debug.Log(this.foodLeft);
         }
         else {
+            Debug.Log("food ran out");
             animal.SwitchToPreviousState();
             if(eaters.Count == 0){
                 Destroy(this.gameObject);

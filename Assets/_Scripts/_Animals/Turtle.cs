@@ -16,8 +16,6 @@ public class Turtle : BaseAnimal
 
     public override void Eat(float foodPoints, Collider food)
     {
-        stateMachine.ChangeState(new EatingFood(food.gameObject.GetComponent<Food>(), 
-            foodConsumingRate, agent, this));
     }
 
     public override void Injured(float damage)
@@ -51,19 +49,25 @@ public class Turtle : BaseAnimal
 
     private void Update()
     {
+        Debug.Log(this.stateMachine.GetCurrentState());
+        Debug.Log(hungerLevel);
         this.stateMachine.ExecuteStateUpdate();
-        if (hungerLevel < 30f)
+        if (hungerLevel < 30f && this.stateMachine.GetCurrentState().ToString().Equals("WanderAround"))
         {
+            Debug.Log("change state");
             this.stateMachine.ChangeState(
-                new SearchForFood(foodItemsLayer, this, speed*15f, "Food", agent));
+                new SearchForFood(foodItemsLayer, this, speed*15f, "Food", agent, foodConsumingRate));
         }
 
+        /*
         if (hungerLevel > 100f && this.stateMachine.GetCurrentState().GetType().Equals("EatingFood")) {
             Debug.Log("Swtich");
             this.SwitchToPreviousState();
         }
+        */
 
         hungerLevel -= Time.deltaTime * 0.5f;
+
     }
 
     private void OnTriggerEnter(Collider other)

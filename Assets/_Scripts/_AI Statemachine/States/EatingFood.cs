@@ -23,11 +23,12 @@ public class EatingFood : IState
         animal.RecordAgentState(ref agent);
         agent.SetDestination(food.gameObject.transform.position);
         Debug.Log(animal.name + " start eating");
+        animal.SetBusy(1);
     }
 
     public void Execute()
     {
-        food.Consumed(animal);
+	    food.Consumed(animal);
     }
 
     public void Exit()

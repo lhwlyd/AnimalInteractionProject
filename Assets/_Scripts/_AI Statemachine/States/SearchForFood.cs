@@ -11,21 +11,22 @@ public class SearchForFood : IState
     private string tagToLookFor;
     private NavMeshAgent agent;
     private WanderAround wanderAround;
-
+    private float foodConsumingRate;
 
     public SearchForFood(LayerMask searchLayer, BaseAnimal animal, float searchRadius,
-        string tagToLookFor, NavMeshAgent agent) {
+        string tagToLookFor, NavMeshAgent agent, float foodConsumingRate) {
         this.searchLayer = searchLayer;
         this.animal = animal;
         this.searchRadius = searchRadius;
         this.tagToLookFor = tagToLookFor;
         this.agent = agent;
-
-        wanderAround = new WanderAround(agent, agent.speed);
+        this.foodConsumingRate = foodConsumingRate;
     }
 
     public void Enter()
     {
+        wanderAround = new WanderAround(agent, agent.speed);
+        animal.SetBusy(2);
     }
 
     public void Execute()
@@ -45,6 +46,15 @@ public class SearchForFood : IState
         for (int i=0; i<hitObjects.Length; i++) {
             if (hitObjects[i].CompareTag(tagToLookFor)) {
                 this.agent.SetDestination(hitObjects[i].transform.position);
+                if(Vector3.Distance(new Vector3(animal.gameObject.transform.position.x, animal.gameObject.transform.position.y, 0f), 
+                    new Vector3(hitObjects[i].transform.position.x, hitObjects[i].transform.position.y, 0f)) < 1f){
+                        
+                    animal.GetStateMachine().ChangeState(new EatingFood(hitObjects[i].gameObject.GetComponent<Food>(), 
+                    foodConsumingRate, agent, animal));
+
+
+                    Debug.Log(animal.GetStateMachine().GetCurrentState());
+                }
             }
             return;
         }

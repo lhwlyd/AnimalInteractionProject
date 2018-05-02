@@ -23,6 +23,7 @@ public abstract class BaseAnimal: MonoBehaviour {
         foodConsumingRate,
         waterConsumingRate,
         speed;
+    protected bool isBusy;
     protected NavMeshAgent agent;
 
     // Nav mesh vars
@@ -71,12 +72,20 @@ public abstract class BaseAnimal: MonoBehaviour {
     }
 
     public void SetBusy(int busyType) {
-        if (busyType == 0) {
+        isBusy = true;
+        switch (busyType) {
             // Being grabbed
-            RecordAgentState(ref agent);
-            this.stateMachine.ChangeState(new Grabbed(agent));
+            case 0:
+                RecordAgentState(ref agent);
+                this.stateMachine.ChangeState(new Grabbed(agent));
+            break;
+                
         }
 
+    }
+
+    public void ExitBusy(){
+        isBusy = false;
     }
 
     public void SwitchToPreviousState() {
