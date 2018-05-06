@@ -49,14 +49,12 @@ public class Turtle : BaseAnimal
 
     private void Update()
     {
-        Debug.Log(this.stateMachine.GetCurrentState());
-        Debug.Log(hungerLevel);
         this.stateMachine.ExecuteStateUpdate();
-        if (hungerLevel < 30f && this.stateMachine.GetCurrentState().ToString().Equals("WanderAround"))
+        if ( (hungerLevel < 30f || thirstLevel < 30f) && this.stateMachine.GetCurrentState().ToString().Equals("WanderAround"))
         {
             Debug.Log("change state");
             this.stateMachine.ChangeState(
-                new SearchForFood(foodItemsLayer, this, speed*15f, "Food", agent, foodConsumingRate));
+                new SearchForResource(foodItemsLayer, waterItemsLayer, this, speed*15f, agent, foodConsumingRate));
         }
 
         /*

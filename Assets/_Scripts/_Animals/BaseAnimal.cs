@@ -11,6 +11,8 @@ public abstract class BaseAnimal: MonoBehaviour {
     [SerializeField]
     protected LayerMask foodItemsLayer;
     [SerializeField]
+    protected LayerMask waterItemsLayer;
+    [SerializeField]
     protected float foodDetectRange;
 
     [SerializeField]

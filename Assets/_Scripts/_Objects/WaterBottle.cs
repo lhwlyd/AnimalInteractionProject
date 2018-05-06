@@ -14,7 +14,7 @@ public class WaterBottle : MonoBehaviour {
     private void Start()
     {
         waterLeft = 10;
-        waterOutTimer = 0.25f;
+        waterOutTimer = 0.1f;
     }
     // Update is called once per frame
     void Update () {

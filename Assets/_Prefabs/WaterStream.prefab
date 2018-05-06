@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 198377417082483002}
   - component: {fileID: 199019955488379094}
   m_Layer: 0
-  m_Name: Water
+  m_Name: WaterStream
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -149,7 +149,7 @@ ParticleSystem:
     startSpeed:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 5
+      scalar: 0
       minScalar: 5
       maxCurve:
         serializedVersion: 2
