@@ -4,17 +4,17 @@ using UnityEngine;
 
 public class WaterBottle : MonoBehaviour {
 
-    private int foodLeft;
-    public GameObject food;
+    private int waterLeft;
+    public GameObject water;
     public Transform generatePoint;
 
-    private float foodOutTimer;
+    private float waterOutTimer;
     private float time;
 
     private void Start()
     {
-        foodLeft = 50;
-        foodOutTimer = 0.25f;
+        waterLeft = 10;
+        waterOutTimer = 0.25f;
     }
     // Update is called once per frame
     void Update () {
@@ -22,10 +22,10 @@ public class WaterBottle : MonoBehaviour {
         // Need to fix this
         if (Vector3.Dot(transform.up, Vector3.down) > 0)
         {
-            if (time >= foodOutTimer) {
-                GameObject newFood = Instantiate(food, generatePoint);
-                newFood.transform.SetParent(null);
-                foodLeft--;
+            if (time >= waterOutTimer) {
+                GameObject newWater = Instantiate(water, generatePoint);
+                newWater.transform.SetParent(null);
+                waterLeft--;
                 time = 0;
             }
             
