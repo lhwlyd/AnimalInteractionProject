@@ -8,6 +8,7 @@ TagManager:
   - rightHand
   - Food
   - Turtle
+  - Water
   layers:
   - Default
   - TransparentFX

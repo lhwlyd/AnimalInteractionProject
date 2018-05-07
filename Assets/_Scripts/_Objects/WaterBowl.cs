@@ -24,10 +24,6 @@ public class WaterBowl : MonoBehaviour {
         }
         */
 
-        Debug.Log("touched water");
-        if (waterPoints < 1000)
-            this.waterPoints++;
-
         Destroy(other, 0.2f);
 
         UpdateWater();
@@ -40,7 +36,11 @@ public class WaterBowl : MonoBehaviour {
 
     private void UpdateWater()
     {
-        if (waterPoints > 100)
+        waterPoints++;
+        if (waterPoints > 100) {
             Instantiate(waterDrop, waterGenerationPoint.position, Quaternion.identity);
+            waterPoints = 0;
+        }
+
     }
 }

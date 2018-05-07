@@ -1875,6 +1875,9 @@ MonoBehaviour:
   foodItemsLayer:
     serializedVersion: 2
     m_Bits: 256
+  waterItemsLayer:
+    serializedVersion: 2
+    m_Bits: 16
   foodDetectRange: 20
   agressionLevel: 0
   hungerLevel: 100

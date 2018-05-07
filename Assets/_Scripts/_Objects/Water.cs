@@ -2,45 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Water : MonoBehaviour
+public class Water : Edible
 {
-
-    [SerializeField]
-    [Range(0, 100)]
-    protected float waterLeft, consumeRate;
-
-    protected bool beingEaten;
-    protected Dictionary<BaseAnimal, float> eaters;
-
-    private void Start()
+    protected override void Start()
     {
-        waterLeft = 100f;
-        consumeRate = 0f;
-        eaters = new Dictionary<BaseAnimal, float>();
+        base.Start();
+        foodLeft = 30f;
     }
 
-    public void Eaten(float consumingRate, BaseAnimal consumer)
+    public override void Consumed(BaseAnimal animal)
     {
-        this.consumeRate += consumingRate;
-        beingEaten = true;
-        eaters.Add(consumer, consumingRate);
-    }
-
-    public void StopEating(BaseAnimal consumer)
-    {
-        //this.consumeRate -= eaters[consumer];
-        eaters.Remove(consumer);
-        beingEaten = (eaters.Count > 0);
-    }
-
-    public void Consumed(BaseAnimal animal)
-    {
-        if (this.waterLeft > 0)
+        if (this.foodLeft > 0)
         {
             float update = Time.deltaTime * eaters[animal];
-            this.waterLeft -= update;
-            animal.UpdateHungerLevel(update);
-            Debug.Log(this.waterLeft);
+            this.foodLeft -= update;
+            animal.UpdateThirstLevel(update);
+            Debug.Log(this.foodLeft);
         }
         else
         {

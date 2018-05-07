@@ -14,7 +14,8 @@ public class StateMachine : MonoBehaviour {
             currentlyRunningState.Exit();
             if (newState.GetType().Equals(currentlyRunningState.GetType()))
             {
-                // Do nothing, duplicate states
+                // Do nothing(just execute the current state), duplicate states
+                ExecuteStateUpdate();
                 return;
             }
         }

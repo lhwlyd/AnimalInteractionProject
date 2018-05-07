@@ -5,14 +5,14 @@ using UnityEngine.AI;
 
 public class DrinkingWater : IState
 {
-    Food food;
+    Water water;
     float consumingRate;
     NavMeshAgent agent;
     BaseAnimal animal;
 
-    public DrinkingWater(Food food, float consumingRate, NavMeshAgent agent, BaseAnimal animal)
+    public DrinkingWater(Water water, float consumingRate, NavMeshAgent agent, BaseAnimal animal)
     {
-        this.food = food;
+        this.water = water;
         this.consumingRate = consumingRate;
         this.agent = agent;
         this.animal = animal;
@@ -20,21 +20,21 @@ public class DrinkingWater : IState
 
     public void Enter()
     {
-        food.Eaten(consumingRate, animal);
+        water.Eaten(consumingRate, animal);
         animal.RecordAgentState(ref agent);
-        agent.SetDestination(food.gameObject.transform.position);
+        agent.SetDestination(water.gameObject.transform.position);
         Debug.Log(animal.name + " start eating");
         animal.SetBusy(1);
     }
 
     public void Execute()
     {
-        food.Consumed(animal);
+        water.Consumed(animal);
     }
 
     public void Exit()
     {
-        food.StopEating(animal);
+        water.StopEating(animal);
         animal.RestoreAgentState(ref agent);
         Debug.Log(animal.name + " stopped eating");
     }
