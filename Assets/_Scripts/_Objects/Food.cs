@@ -7,7 +7,7 @@ public class Food : Edible {
     protected override void Start()
     {
         base.Start();
-        foodLeft = 100f;
+        foodLeft = 50f;
     }
 
     public override void Consumed(BaseAnimal animal)

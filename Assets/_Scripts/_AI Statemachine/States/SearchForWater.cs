@@ -11,6 +11,7 @@ public class SearchForWater : IState
     private string tagToLookFor;
     private NavMeshAgent agent;
     private WanderAround wanderAround;
+    private Resting resting;
     private float waterConsumingRate;
 
     public SearchForWater(LayerMask searchLayer, BaseAnimal animal, float searchRadius,
@@ -27,7 +28,7 @@ public class SearchForWater : IState
     public void Enter()
     {
         wanderAround = new WanderAround(agent, agent.speed);
-        animal.SetBusy(2);
+        resting = new Resting(animal, agent);
     }
 
     public void Execute()
@@ -37,11 +38,19 @@ public class SearchForWater : IState
         if (hitObjects.Length == 0)
         {
             // Just wandering around if no food given
-            wanderAround.Execute();
+            if (animal.GetEnergyLevel() < 20f)
+            {
+                // resting.Execute(); // Can't do this, because the energy level will just float above and below 20f
+                this.animal.GetStateMachine().ChangeState(resting);
+            }
+            else
+            {
+                wanderAround.Execute();
+            }
             return;
         }
 
-        if (animal.GetHungerLevel() > 100f)
+        if (animal.GetThirstLevel() > 80f && animal.GetHungerLevel() > 50f)
         {
             animal.GetStateMachine().ChangeState(wanderAround);
         }

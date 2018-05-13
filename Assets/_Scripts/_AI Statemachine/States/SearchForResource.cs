@@ -35,11 +35,12 @@ public class SearchForResource : IState
     public void Enter()
     {
         wanderAround = new WanderAround(agent, agent.speed);
-        animal.SetBusy(2);
 
         searchForFood = new SearchForFood(searchLayer1, animal, searchRadius, "Food", agent, foodConsumingRate);
         searchForWater = new SearchForWater(searchLayer2, animal, searchRadius, "Water", agent, waterConsumingRate);
         microManager = new StateMachine();
+
+        animal.SetBusy(BaseAnimal.BusyType.SearchingForResource);
     }
 
     public void Execute()
@@ -54,6 +55,7 @@ public class SearchForResource : IState
             Debug.Log("Searching for water!");
             microManager.ChangeState(searchForWater);
         }
+
     }
 
     public void Exit()

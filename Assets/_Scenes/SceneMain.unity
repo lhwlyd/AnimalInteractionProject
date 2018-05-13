@@ -1880,13 +1880,14 @@ MonoBehaviour:
     m_Bits: 16
   foodDetectRange: 20
   agressionLevel: 0
-  hungerLevel: 100
+  hungerLevel: 20.6
   intimateLevel: 100
   intelligenceLevel: 40.2
   thirstLevel: 23.1
   healthLevel: 100
-  foodConsumingRate: 20
-  waterConsumingRate: 10
+  energyLevel: 21
+  foodConsumingRate: 10
+  waterConsumingRate: 5
   speed: 1
 --- !u!195 &493539466
 NavMeshAgent:

@@ -51,12 +51,20 @@ public class Turtle : BaseAnimal
     {
         Debug.Log(stateMachine.GetCurrentState());
         this.stateMachine.ExecuteStateUpdate();
-        if ( (hungerLevel < 30f || thirstLevel < 30f) && this.stateMachine.GetCurrentState().ToString().Equals("WanderAround"))
-        {
-            Debug.Log("change state");
-            this.stateMachine.ChangeState(
-                new SearchForResource(foodItemsLayer, waterItemsLayer, this, speed*15f, agent, foodConsumingRate, waterConsumingRate));
+        if (!this.IsBusy()) {
+            if ((hungerLevel < 30f || thirstLevel < 30f))
+            {
+                Debug.Log("change state");
+                this.stateMachine.ChangeState(
+                    new SearchForResource(foodItemsLayer, waterItemsLayer, this, speed * 15f, agent, foodConsumingRate, waterConsumingRate));
+            }
+
+            if (this.energyLevel < 20f) {
+                Debug.Log("Get to sleep");
+                this.stateMachine.ChangeState(new Resting(this, this.agent));
+            }
         }
+
 
         /*
         if (hungerLevel > 100f && this.stateMachine.GetCurrentState().GetType().Equals("EatingFood")) {
@@ -65,13 +73,17 @@ public class Turtle : BaseAnimal
         }
         */
 
-        hungerLevel -= Time.deltaTime * 0.5f;
+        this.UpdateBodyConditions();
+    }
 
+    private void UpdateBodyConditions() {
+        this.UpdateEnergyLevel(Time.deltaTime * -0.2f);
+        this.UpdateHungerLevel(Time.deltaTime * -0.1f);
+        this.UpdateThirstLevel(Time.deltaTime * -0.05f);
     }
 
     private void OnTriggerEnter(Collider other)
     {
-
         switch (other.tag)
         {
             // Grab script moved to "Grabbale.cs"
@@ -85,7 +97,7 @@ public class Turtle : BaseAnimal
 
         switch (other.tag) {
             case "Food":
-                Debug.Log("left food!");
+                //Debug.Log("left food!");
                 //other.gameObject.SendMessage("StopEating", this);
                 break;
         }

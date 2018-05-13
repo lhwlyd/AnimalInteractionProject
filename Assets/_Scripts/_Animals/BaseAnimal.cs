@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 
 [RequireComponent(typeof(NavMeshAgent))]
-public abstract class BaseAnimal: MonoBehaviour {
+public abstract class BaseAnimal : MonoBehaviour {
 
     [SerializeField]
     protected GameObject playerRef;
@@ -22,10 +22,20 @@ public abstract class BaseAnimal: MonoBehaviour {
         intelligenceLevel,
         thirstLevel,
         healthLevel,
+        energyLevel, // is the animal tired or not
         foodConsumingRate,
         waterConsumingRate,
         speed;
     protected bool isBusy;
+    public enum BusyType
+    {
+        Grabbed,
+        Hurt,
+        Ingesting,
+        SearchingForResource,
+        Resting
+    };
+
     protected NavMeshAgent agent;
 
     // Nav mesh vars
@@ -73,21 +83,37 @@ public abstract class BaseAnimal: MonoBehaviour {
         this.thirstLevel += update;
     }
 
-    public void SetBusy(int busyType) {
+    public void UpdateEnergyLevel(float update) {
+        this.energyLevel += update;
+    }
+
+    public float GetEnergyLevel() {
+        return this.energyLevel;
+    }
+
+    public void SetBusy(BusyType busyType) {
         isBusy = true;
         switch (busyType) {
-            // Being grabbed
-            case 0:
+            case BusyType.Grabbed:
                 RecordAgentState(ref agent);
                 this.stateMachine.ChangeState(new Grabbed(agent));
             break;
-                
+
+            case BusyType.Hurt:
+                break;
+
+            case BusyType.Ingesting:
+                break; 
         }
 
     }
 
     public void ExitBusy(){
         isBusy = false;
+    }
+
+    public bool IsBusy() {
+        return isBusy;
     }
 
     public void SwitchToPreviousState() {
