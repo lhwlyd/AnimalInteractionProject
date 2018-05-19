@@ -49,18 +49,18 @@ public class Turtle : BaseAnimal
 
     private void Update()
     {
-        Debug.Log(stateMachine.GetCurrentState());
+        // Debug.Log(stateMachine.GetCurrentState());
         this.stateMachine.ExecuteStateUpdate();
         if (!this.IsBusy()) {
             if ((hungerLevel < 30f || thirstLevel < 30f))
             {
-                Debug.Log("change state");
+                // Debug.Log("change state");
                 this.stateMachine.ChangeState(
                     new SearchForResource(foodItemsLayer, waterItemsLayer, this, speed * 15f, agent, foodConsumingRate, waterConsumingRate));
             }
 
             if (this.energyLevel < 20f) {
-                Debug.Log("Get to sleep");
+                // Debug.Log("Get to sleep");
                 this.stateMachine.ChangeState(new Resting(this, this.agent));
             }
         }

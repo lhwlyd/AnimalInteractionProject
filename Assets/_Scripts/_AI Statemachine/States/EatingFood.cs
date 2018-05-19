@@ -22,7 +22,7 @@ public class EatingFood : IState
         food.Eaten(consumingRate, animal);
         animal.RecordAgentState(ref agent);
         agent.SetDestination(food.gameObject.transform.position);
-        Debug.Log(animal.name + " start eating");
+        // Debug.Log(animal.name + " start eating");
         animal.SetBusy(BaseAnimal.BusyType.Ingesting);
     }
 
@@ -35,6 +35,6 @@ public class EatingFood : IState
     {
         food.StopEating(animal);
         animal.RestoreAgentState(ref agent);
-        Debug.Log(animal.name + " stopped eating");
+        // Debug.Log(animal.name + " stopped eating");
     }
 }

@@ -23,7 +23,7 @@ public class DrinkingWater : IState
         water.Eaten(consumingRate, animal);
         animal.RecordAgentState(ref agent);
         agent.SetDestination(water.gameObject.transform.position);
-        Debug.Log(animal.name + " start eating");
+        // Debug.Log(animal.name + " start eating");
         animal.SetBusy(BaseAnimal.BusyType.Ingesting);
     }
 
@@ -36,6 +36,6 @@ public class DrinkingWater : IState
     {
         water.StopEating(animal);
         animal.RestoreAgentState(ref agent);
-        Debug.Log(animal.name + " stopped eating");
+        // Debug.Log(animal.name + " stopped eating");
     }
 }

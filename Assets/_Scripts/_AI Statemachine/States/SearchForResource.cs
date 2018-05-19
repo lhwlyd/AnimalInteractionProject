@@ -48,11 +48,11 @@ public class SearchForResource : IState
         if (animal.GetHungerLevel() < animal.GetThirstLevel()) 
             // So far this condition checking should be safe.
         {
-            Debug.Log("Searching for food!");
+            // Debug.Log("Searching for food!");
             microManager.ChangeState(searchForFood);
         }
         else {
-            Debug.Log("Searching for water!");
+            // Debug.Log("Searching for water!");
             microManager.ChangeState(searchForWater);
         }
 
