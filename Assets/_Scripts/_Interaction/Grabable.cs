@@ -61,6 +61,7 @@ public class Grabable : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other)
     {
+        Debug.Log("COLLISION");
         switch (other.tag)
         {
             case "leftHand":
@@ -83,8 +84,8 @@ public class Grabable : MonoBehaviour {
 
     private IHandGesture GetHandGesture(GameObject HandRef)
     {
-        var LHandGestureRef = HandRef.GetComponent<LHandGesture>();
-        var RHandGestureRef = HandRef.GetComponent<RHandGesture>();
+        var LHandGestureRef = HandRef.GetComponent<Touch_LHandGesture>();
+        var RHandGestureRef = HandRef.GetComponent<Touch_RHandGesture>();
         Debug.Log(LHandGestureRef);
         Debug.Log(RHandGestureRef);
 
