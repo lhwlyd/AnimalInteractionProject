@@ -6,7 +6,7 @@ public class Touch_LHandGesture : MonoBehaviour, IHandGesture
 {
     public bool IsGrabbing()
     {
-        throw new System.NotImplementedException();
+        return OVRInput.Get(OVRInput.Axis1D.PrimaryHandTrigger) > 0.5f && OVRInput.Get(OVRInput.Axis1D.PrimaryIndexTrigger) > 0.5f;
     }
 
     public bool IsPinching()

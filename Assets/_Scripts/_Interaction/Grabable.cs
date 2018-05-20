@@ -5,11 +5,13 @@ using UnityEngine.AI;
 
 public class Grabable : MonoBehaviour {
 
-    bool readyToBeGrabbed = false;
+    public bool readyToBeGrabbed = false;
     //bool beingGrabbed;
     public GameObject GrabbingHandRef;
     public GameObject LGrabbingHandRef;
     public GameObject RGrabbingHandRef;
+
+    public bool grabbed = false;
 
     private void Start() {
         LGrabbingHandRef = GameObject.FindGameObjectWithTag("leftHand");
@@ -18,7 +20,7 @@ public class Grabable : MonoBehaviour {
     private void FixedUpdate()
     {
         // if there is a hand in the scene, and this object is ready to be grabbed...
-        if (GrabbingHandRef != null && readyToBeGrabbed)
+        if (readyToBeGrabbed)
         {
 
             // if the hand is not disabled (within LoS of the Leap)...
@@ -30,7 +32,34 @@ public class Grabable : MonoBehaviour {
                 // if the gesture is not null (we did it right)...
                 if (gesture != null)
                 {
-                    Debug.Log("WE IN HERE...");
+                    bool grabbing = gesture.IsGrabbing();
+                    Debug.Log(grabbing);
+                    if (gesture.IsGrabbing())
+                    {
+                        Debug.Log("still grabbing...");
+                        Grabbed();
+                    }
+                    else
+                    {
+                        ReleaseGrabbing(); 
+                    }
+                }
+            }
+        }
+
+        
+        if (GrabbingHandRef != null && grabbed) {
+            // if the hand is not disabled (within LoS of the Leap)...
+            if (GrabbingHandRef.activeSelf == true)
+            {
+
+                var gesture = GetHandGesture(GrabbingHandRef);
+
+                // if the gesture is not null (we did it right)...
+                if (gesture != null)
+                {
+                    bool grabbing = gesture.IsGrabbing();
+                    Debug.Log(grabbing);
                     if (gesture.IsGrabbing())
                     {
                         Debug.Log("still grabbing...");
@@ -43,20 +72,20 @@ public class Grabable : MonoBehaviour {
                 }
             }
         }
-        else if (!readyToBeGrabbed) ReleaseGrabbing();
+        // else if (!readyToBeGrabbed) ReleaseGrabbing();
     }
 
     private void Grabbed()
     {
         Debug.Log("Grabbing");
         transform.parent = GrabbingHandRef.transform;
+        grabbed = true;
     }
 
     private void ReleaseGrabbing()
     {
-        //Debug.Log("RELEASING!!!!");
-        //GrabbingHandRef = null;
         transform.parent = null;
+        grabbed = false;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -74,6 +103,7 @@ public class Grabable : MonoBehaviour {
     
 
     private void OnTriggerExit(Collider other){
+        // GrabbingHandRef = null;
         readyToBeGrabbed = false;
     }
 
