@@ -7,17 +7,14 @@ using UnityEngine.AI;
 public class Grabbed : IState
 {
     NavMeshAgent agent;
-    GameObject GoRef;
 
     public Grabbed(NavMeshAgent agent) {
         this.agent = agent;
-        GoRef = agent.gameObject;
-        agent.enabled = false;
     }
 
     public void Enter()
     {
-        // GameObject.Destroy(GoRef.GetComponent<NavMeshAgent>(), 0);
+        agent.enabled = false;
     }
 
     public void Execute()
@@ -27,7 +24,6 @@ public class Grabbed : IState
 
     public void Exit()
     {
-        // Debug.Break();
-        GoRef.GetComponent<NavMeshAgent>().enabled = true;
+        agent.enabled = true;
     }
 }
