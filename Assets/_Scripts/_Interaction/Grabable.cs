@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Grabable : MonoBehaviour {
+public class Grabable : MonoBehaviour
+{
 
     public bool readyToBeGrabbed = false;
     //bool beingGrabbed;
@@ -11,10 +12,14 @@ public class Grabable : MonoBehaviour {
     public GameObject LGrabbingHandRef;
     public GameObject RGrabbingHandRef;
 
+    public BaseAnimal animalComponentRef;
     public bool grabbed = false;
 
-    private void Start() {
+    private void Start()
+    {
         LGrabbingHandRef = GameObject.FindGameObjectWithTag("leftHand");
+        RGrabbingHandRef = GameObject.FindGameObjectWithTag("rightHand");
+        animalComponentRef = GetComponent<BaseAnimal>();
     }
 
     private void FixedUpdate()
@@ -33,22 +38,23 @@ public class Grabable : MonoBehaviour {
                 if (gesture != null)
                 {
                     bool grabbing = gesture.IsGrabbing();
-                    Debug.Log(grabbing);
+                    // Debug.Log(grabbing);
                     if (gesture.IsGrabbing())
                     {
-                        Debug.Log("still grabbing...");
+                        // Debug.Log("still grabbing...");
                         Grabbed();
                     }
-                    else
-                    {
-                        ReleaseGrabbing(); 
-                    }
+                    // else
+                    // {
+                    //     ReleaseGrabbing();
+                    // }
                 }
             }
         }
 
-        
-        if (GrabbingHandRef != null && grabbed) {
+
+        if (GrabbingHandRef != null && grabbed)
+        {
             // if the hand is not disabled (within LoS of the Leap)...
             if (GrabbingHandRef.activeSelf == true)
             {
@@ -59,7 +65,7 @@ public class Grabable : MonoBehaviour {
                 if (gesture != null)
                 {
                     bool grabbing = gesture.IsGrabbing();
-                    Debug.Log(grabbing);
+                    // Debug.Log(grabbing);
                     if (gesture.IsGrabbing())
                     {
                         Debug.Log("still grabbing...");
@@ -77,37 +83,51 @@ public class Grabable : MonoBehaviour {
 
     private void Grabbed()
     {
-        Debug.Log("Grabbing");
+        // Debug.Log("Grabbing");
         transform.parent = GrabbingHandRef.transform;
+        if(animalComponentRef != null && !grabbed) {
+            animalComponentRef.SetBusy(BaseAnimal.BusyType.Grabbed);
+        }
         grabbed = true;
     }
 
     private void ReleaseGrabbing()
     {
+        Debug.Log("RELEASING!!!");
         transform.parent = null;
         grabbed = false;
+        if(animalComponentRef != null) {
+            animalComponentRef.ExitBusy();
+        }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("COLLISION");
-        switch (other.tag)
+        if (!grabbed)
         {
-            case "leftHand":
-                PrepareToGrab(other.gameObject);
-                break;
+            switch (other.tag)
+            {
+                case "leftHand":
+                    PrepareToGrab(other.gameObject);
+                    break;
+                case "rightHand":
+                    PrepareToGrab(other.gameObject);
+                    break;
+            }
         }
 
     }
 
-    
 
-    private void OnTriggerExit(Collider other){
+
+    private void OnTriggerExit(Collider other)
+    {
         // GrabbingHandRef = null;
         readyToBeGrabbed = false;
     }
 
-    private void PrepareToGrab(GameObject handRef) {
+    private void PrepareToGrab(GameObject handRef)
+    {
         GrabbingHandRef = handRef;
         readyToBeGrabbed = true;
     }
@@ -116,8 +136,6 @@ public class Grabable : MonoBehaviour {
     {
         var LHandGestureRef = HandRef.GetComponent<Touch_LHandGesture>();
         var RHandGestureRef = HandRef.GetComponent<Touch_RHandGesture>();
-        Debug.Log(LHandGestureRef);
-        Debug.Log(RHandGestureRef);
 
         if (LHandGestureRef != null) return LHandGestureRef;
         if (RHandGestureRef != null) return RHandGestureRef;

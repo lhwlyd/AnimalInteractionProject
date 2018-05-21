@@ -3063,6 +3063,7 @@ MonoBehaviour:
   GrabbingHandRef: {fileID: 0}
   LGrabbingHandRef: {fileID: 0}
   RGrabbingHandRef: {fileID: 0}
+  animalComponentRef: {fileID: 0}
   grabbed: 0
 --- !u!23 &79387265
 MeshRenderer:
@@ -7840,7 +7841,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.30553335
-  m_Speed: 3.5
+  m_Speed: 3.25
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
@@ -7867,6 +7868,7 @@ MonoBehaviour:
   GrabbingHandRef: {fileID: 0}
   LGrabbingHandRef: {fileID: 0}
   RGrabbingHandRef: {fileID: 0}
+  animalComponentRef: {fileID: 0}
   grabbed: 0
 --- !u!135 &493539471
 SphereCollider:
@@ -8951,7 +8953,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4309743995697292, guid: 3b1e3e9155d404942bc65d9aa80120ba, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -0.21263492
+      value: 0.23
       objectReference: {fileID: 0}
     - target: {fileID: 4309743995697292, guid: 3b1e3e9155d404942bc65d9aa80120ba, type: 2}
       propertyPath: m_LocalPosition.y
@@ -8959,7 +8961,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4309743995697292, guid: 3b1e3e9155d404942bc65d9aa80120ba, type: 2}
       propertyPath: m_LocalPosition.z
-      value: -3.49
+      value: 0.69
       objectReference: {fileID: 0}
     - target: {fileID: 4309743995697292, guid: 3b1e3e9155d404942bc65d9aa80120ba, type: 2}
       propertyPath: m_LocalRotation.x
@@ -10291,6 +10293,7 @@ MonoBehaviour:
   GrabbingHandRef: {fileID: 0}
   LGrabbingHandRef: {fileID: 0}
   RGrabbingHandRef: {fileID: 0}
+  animalComponentRef: {fileID: 0}
   grabbed: 0
 --- !u!1001 &1561781822
 Prefab:

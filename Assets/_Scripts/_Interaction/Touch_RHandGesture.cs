@@ -5,7 +5,7 @@ using UnityEngine;
 public class Touch_RHandGesture : MonoBehaviour, IHandGesture {
     public bool IsGrabbing()
     {
-        return OVRInput.Get(OVRInput.Axis1D.SecondaryHandTrigger) > 0.6f && OVRInput.Get(OVRInput.Axis1D.SecondaryIndexTrigger) > 0.6f;
+        return OVRInput.Get(OVRInput.Axis1D.SecondaryHandTrigger) > 0.5f && OVRInput.Get(OVRInput.Axis1D.SecondaryIndexTrigger) > 0.5f;
     }
 
     public bool IsPinching()
