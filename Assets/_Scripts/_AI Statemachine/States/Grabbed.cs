@@ -16,8 +16,9 @@ public class Grabbed : IState
     {
         agent.isStopped = true;
         agent.enabled = false;
-        agent.gameObject.GetComponent<NavMeshAgent>().enabled = false;
-        Debug.Log(agent.transform.tag);
+        agent.updatePosition = false;
+        // agent.gameObject.GetComponent<NavMeshAgent>().enabled = false;
+        // Debug.Log(agent.transform.tag);
     }
 
     public void Execute()
@@ -29,7 +30,8 @@ public class Grabbed : IState
     {
         agent.enabled = true;
         agent.isStopped = false;
-        agent.gameObject.GetComponent<NavMeshAgent>().enabled = true;
+        agent.updatePosition = true;
+        // agent.gameObject.GetComponent<NavMeshAgent>().enabled = true;
 
     }
 }
