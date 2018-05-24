@@ -4,21 +4,33 @@ using UnityEngine;
 
 public class Petting : IState {
 
-	public Petting(){
-		
+    GameObject HeartParticleObject = null;
+
+	public Petting(Transform parent){
+        foreach (Transform transform in parent) {
+            if (transform.CompareTag("particle_hearts")) {
+                HeartParticleObject = transform.gameObject;
+                break;
+            }
+        }
 	}
     public void Enter()
     {
-        throw new System.NotImplementedException();
+        if (HeartParticleObject != null) {
+            HeartParticleObject.SetActive(true);
+        }
     }
 
     public void Execute()
     {
-        throw new System.NotImplementedException();
+        Debug.Log("being petted");
     }
 
     public void Exit()
     {
-        throw new System.NotImplementedException();
+        if (HeartParticleObject != null)
+        {
+            HeartParticleObject.SetActive(false);
+        }
     }
 }

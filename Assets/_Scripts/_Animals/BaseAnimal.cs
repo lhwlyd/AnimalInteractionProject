@@ -33,7 +33,8 @@ public abstract class BaseAnimal : MonoBehaviour {
         Hurt,
         Ingesting,
         SearchingForResource,
-        Resting
+        Resting,
+        Petting
     };
 
     protected NavMeshAgent agent;
@@ -103,7 +104,11 @@ public abstract class BaseAnimal : MonoBehaviour {
                 break;
 
             case BusyType.Ingesting:
-                break; 
+                break;
+
+            case BusyType.Petting:
+                stateMachine.ChangeState(new Petting(transform));
+                break;
         }
 
     }

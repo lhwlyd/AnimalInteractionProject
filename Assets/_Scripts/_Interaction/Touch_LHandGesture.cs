@@ -9,7 +9,7 @@ public class Touch_LHandGesture : MonoBehaviour, IHandGesture
         return OVRInput.Get(OVRInput.Axis1D.PrimaryHandTrigger) > 0.5f && OVRInput.Get(OVRInput.Axis1D.PrimaryIndexTrigger) > 0.5f;
     }
 
-    public bool IsPinching()
+    public bool IsPalmOpen()
     {
         throw new System.NotImplementedException();
     }

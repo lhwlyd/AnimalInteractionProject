@@ -19,13 +19,16 @@ public class WanderAround : IState
 
     public void Execute()
     {
-        if (!agent.pathPending)
+        if (agent.isActiveAndEnabled)
         {
-            if (agent.remainingDistance <= agent.stoppingDistance)
+            if (!agent.pathPending)
             {
-                if (!agent.hasPath || agent.velocity.sqrMagnitude == 0f)
+                if (agent.remainingDistance <= agent.stoppingDistance)
                 {
-                    MoveToNewPlace();
+                    if (!agent.hasPath || agent.velocity.sqrMagnitude == 0f)
+                    {
+                        MoveToNewPlace();
+                    }
                 }
             }
         }
@@ -33,7 +36,8 @@ public class WanderAround : IState
 
     public void Exit()
     {
-        agent.SetDestination(agent.gameObject.transform.position);
+        if(agent.isActiveAndEnabled)
+            agent.SetDestination(agent.gameObject.transform.position);
     }
 
     //Reference: https://docs.unity3d.com/540/Documentation/ScriptReference/NavMesh.SamplePosition.html
@@ -61,7 +65,10 @@ public class WanderAround : IState
             Debug.DrawRay(point, Vector3.up, Color.blue, 1.0f);
         }
 
-        agent.SetDestination(point);
-        agent.speed = speed;
+        if (agent.isActiveAndEnabled)
+        {
+            agent.SetDestination(point);
+            agent.speed = speed;
+        }
     }
 }

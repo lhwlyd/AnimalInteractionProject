@@ -9,6 +9,7 @@ TagManager:
   - Food
   - Turtle
   - Water
+  - particle_hearts
   layers:
   - Default
   - TransparentFX

@@ -8,8 +8,8 @@ public class Touch_RHandGesture : MonoBehaviour, IHandGesture {
         return OVRInput.Get(OVRInput.Axis1D.SecondaryHandTrigger) > 0.5f && OVRInput.Get(OVRInput.Axis1D.SecondaryIndexTrigger) > 0.5f;
     }
 
-    public bool IsPinching()
+    public bool IsPalmOpen()
     {
-        throw new System.NotImplementedException();
+        return !OVRInput.Get(OVRInput.Touch.Any);
     }
 }

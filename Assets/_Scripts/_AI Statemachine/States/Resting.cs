@@ -16,7 +16,9 @@ public class Resting : IState
     public void Enter()
     {
         animal.SetBusy(BaseAnimal.BusyType.Resting);
-        agent.SetDestination(animal.gameObject.transform.position);
+
+        if(agent.isActiveAndEnabled)
+            agent.SetDestination(animal.gameObject.transform.position);
 
         // Play sound(snoring), animations
     }

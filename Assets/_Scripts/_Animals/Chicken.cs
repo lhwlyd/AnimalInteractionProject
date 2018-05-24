@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 
 [RequireComponent(typeof(NavMeshAgent))]
-public class Turtle : BaseAnimal
+public class Chicken : BaseAnimal
 {
     float timer;
     float maxTime;
@@ -25,16 +25,8 @@ public class Turtle : BaseAnimal
 
     public override void Move(Vector3 destination)
     {
-        //stateManager.SetBaseState(AnimalState.WALKING);
         agent.SetDestination(destination);
     }
-
-    /*
-    private void ResetTime() {
-        timer = 0;
-        maxTime = Random.Range(2f, 5.0f);
-    }
-    */
 
     private void Start()
     {
@@ -42,44 +34,31 @@ public class Turtle : BaseAnimal
         agent = GetComponent<NavMeshAgent>();
         playerRef = GameObject.FindGameObjectWithTag("Player");
 
-        //stateManager = new AnimalState();
-        //stateManager.hungerPoints = 60;
         stateMachine.ChangeState(new WanderAround(agent, speed));
     }
 
     private void Update()
     {
-        // Debug.Log(stateMachine.GetCurrentState());
-        this.stateMachine.ExecuteStateUpdate();
-        if (!this.IsBusy()) {
+        stateMachine.ExecuteStateUpdate();
+        if (!IsBusy()) {
             if ((hungerLevel < 30f || thirstLevel < 30f))
             {
-                // Debug.Log("change state");
-                this.stateMachine.ChangeState(
+                stateMachine.ChangeState(
                     new SearchForResource(foodItemsLayer, waterItemsLayer, this, speed * 15f, agent, foodConsumingRate, waterConsumingRate));
             }
 
-            if (this.energyLevel < 20f) {
-                // Debug.Log("Get to sleep");
-                this.stateMachine.ChangeState(new Resting(this, this.agent));
+            if (energyLevel < 20f) {
+                stateMachine.ChangeState(new Resting(this, agent));
             }
         }
 
-
-        /*
-        if (hungerLevel > 100f && this.stateMachine.GetCurrentState().GetType().Equals("EatingFood")) {
-            Debug.Log("Swtich");
-            this.SwitchToPreviousState();
-        }
-        */
-
-        this.UpdateBodyConditions();
+        UpdateBodyConditions();
     }
 
     private void UpdateBodyConditions() {
-        this.UpdateEnergyLevel(Time.deltaTime * -0.2f);
-        this.UpdateHungerLevel(Time.deltaTime * -0.1f);
-        this.UpdateThirstLevel(Time.deltaTime * -0.05f);
+        UpdateEnergyLevel(Time.deltaTime * -0.2f);
+        UpdateHungerLevel(Time.deltaTime * -0.1f);
+        UpdateThirstLevel(Time.deltaTime * -0.05f);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -92,16 +71,6 @@ public class Turtle : BaseAnimal
                 break;
         }
 
-    }
-    private void OnTriggerExit(Collider other) {
-
-        switch (other.tag) {
-            case "Food":
-                //Debug.Log("left food!");
-                //other.gameObject.SendMessage("StopEating", this);
-                break;
-        }
-        
     }
 
 

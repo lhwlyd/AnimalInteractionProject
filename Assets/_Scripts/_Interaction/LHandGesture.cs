@@ -11,7 +11,8 @@ public class LHandGesture : MonoBehaviour, IHandGesture {
         return playerAnimalGesturesRef.LeftHandGrabStrength() > .5f;
     }
 
-    public bool IsPinching() {
-        return false; //TODO, impement pinching... if we need it
+    public bool IsPalmOpen()
+    {
+        throw new System.NotImplementedException();
     }
 }

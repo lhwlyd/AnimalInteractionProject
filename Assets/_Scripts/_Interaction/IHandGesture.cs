@@ -2,6 +2,6 @@
 
     bool IsGrabbing();
 
-    bool IsPinching();
+    bool IsPalmOpen();
 
 }

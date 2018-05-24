@@ -9,7 +9,7 @@ public class RHandGesture : MonoBehaviour, IHandGesture {
         throw new System.NotImplementedException();
     }
 
-    public bool IsPinching()
+    public bool IsPalmOpen()
     {
         throw new System.NotImplementedException();
     }
