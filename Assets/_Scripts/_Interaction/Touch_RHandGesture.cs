@@ -10,6 +10,6 @@ public class Touch_RHandGesture : MonoBehaviour, IHandGesture {
 
     public bool IsPalmOpen()
     {
-        return !OVRInput.Get(OVRInput.Touch.Any);
+        return OVRInput.Get(OVRInput.Axis1D.SecondaryHandTrigger) < 0.1f && OVRInput.Get(OVRInput.Axis1D.SecondaryIndexTrigger) < 0.1f;
     }
 }

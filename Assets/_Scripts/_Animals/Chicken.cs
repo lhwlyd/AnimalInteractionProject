@@ -65,7 +65,6 @@ public class Chicken : BaseAnimal
     {
         switch (other.tag)
         {
-            // Grab script moved to "Grabbale.cs"
             case "Food":
                 Eat(5f, other);
                 break;

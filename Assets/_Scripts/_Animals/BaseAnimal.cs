@@ -16,7 +16,7 @@ public abstract class BaseAnimal : MonoBehaviour {
     protected float foodDetectRange;
 
     [SerializeField]
-    [Range(0, 100)] protected float agressionLevel,
+    [Range(0, 100)] protected float aggressionLevel,
         hungerLevel,
         intimateLevel,
         intelligenceLevel,
@@ -33,8 +33,7 @@ public abstract class BaseAnimal : MonoBehaviour {
         Hurt,
         Ingesting,
         SearchingForResource,
-        Resting,
-        Petting
+        Resting
     };
 
     protected NavMeshAgent agent;
@@ -71,7 +70,7 @@ public abstract class BaseAnimal : MonoBehaviour {
     }
 
     public void UpdateHungerLevel(float update) {
-        this.hungerLevel += update;
+        hungerLevel += update;
     }
 
     public float GetThirstLevel()
@@ -81,15 +80,31 @@ public abstract class BaseAnimal : MonoBehaviour {
 
     public void UpdateThirstLevel(float update)
     {
-        this.thirstLevel += update;
+        thirstLevel += update;
     }
 
     public void UpdateEnergyLevel(float update) {
-        this.energyLevel += update;
+        energyLevel += update;
     }
 
     public float GetEnergyLevel() {
-        return this.energyLevel;
+        return energyLevel;
+    }
+
+    public void UpdateIntimateLevel(float update) {
+        intimateLevel += update;
+    }
+
+    public float GetIntimateLevel() {
+        return intimateLevel;
+    }
+
+    public void UpdateAggresionLevel(float update) {
+        aggressionLevel += update;
+    }
+
+    public float GetAggression() {
+        return aggressionLevel;
     }
 
     public void SetBusy(BusyType busyType) {
@@ -97,17 +112,13 @@ public abstract class BaseAnimal : MonoBehaviour {
         switch (busyType) {
             case BusyType.Grabbed:
                 RecordAgentState(ref agent);
-                this.stateMachine.ChangeState(new Grabbed(agent));
+                stateMachine.ChangeState(new Grabbed(agent));
             break;
 
             case BusyType.Hurt:
                 break;
 
             case BusyType.Ingesting:
-                break;
-
-            case BusyType.Petting:
-                stateMachine.ChangeState(new Petting(transform));
                 break;
         }
 
@@ -127,6 +138,6 @@ public abstract class BaseAnimal : MonoBehaviour {
     }
 
     public StateMachine GetStateMachine() {
-        return this.stateMachine;
+        return stateMachine;
     }
 } 

@@ -10,6 +10,7 @@ TagManager:
   - Turtle
   - Water
   - particle_hearts
+  - particle_injure
   layers:
   - Default
   - TransparentFX

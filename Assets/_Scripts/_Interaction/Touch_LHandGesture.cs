@@ -11,6 +11,6 @@ public class Touch_LHandGesture : MonoBehaviour, IHandGesture
 
     public bool IsPalmOpen()
     {
-        throw new System.NotImplementedException();
+        return OVRInput.Get(OVRInput.Axis1D.PrimaryHandTrigger) < 0.1f && OVRInput.Get(OVRInput.Axis1D.PrimaryHandTrigger) < 0.1f;
     }
 }
