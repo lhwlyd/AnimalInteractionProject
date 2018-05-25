@@ -30,6 +30,7 @@ public class SearchForResource : IState
         this.agent = agent;
         this.foodConsumingRate = foodConsumingRate;
         this.waterConsumingRate = waterConsumingRate;
+
     }
 
     public void Enter()
@@ -45,6 +46,7 @@ public class SearchForResource : IState
 
     public void Execute()
     {
+        // Debug.Log("looking for resources");
         if (animal.GetHungerLevel() < animal.GetThirstLevel()) 
             // So far this condition checking should be safe.
         {

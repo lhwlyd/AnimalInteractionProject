@@ -46,7 +46,10 @@ public class Resting : IState
 
     public void Exit()
     {
-
-        // Play transition animations
+        if (anim != null)
+        {
+            anim.Stop();
+        }
+        animal.ExitBusy();
     }
 }

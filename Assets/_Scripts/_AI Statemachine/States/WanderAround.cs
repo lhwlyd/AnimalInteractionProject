@@ -8,23 +8,30 @@ public class WanderAround : IState
     private NavMeshAgent agent;
     private float speed;
     private Animation anim;
-    private const string walk_animation = "Arm_cock|Walk_fast";
+    private const string animationStr = "Arm_cock|Walk_fast";
 
     public WanderAround(NavMeshAgent agent, float speed) {
         this.agent = agent;
         this.speed = speed;
         anim = agent.gameObject.GetComponent<Animation>();
         if (anim != null) {
-            anim[walk_animation].wrapMode = WrapMode.Loop;
+            anim[animationStr].wrapMode = WrapMode.Loop;
         }
     }
     public void Enter()
     {
-        MoveToNewPlace();
+        if (MoveToNewPlace()) {
+            if (anim != null)
+            {
+                anim.Play(animationStr);
+            }
+        }
     }
 
     public void Execute()
     {
+
+        Debug.Log("Wandering around");
         if (agent.isActiveAndEnabled)
         {
             if (!agent.pathPending)
@@ -33,7 +40,13 @@ public class WanderAround : IState
                 {
                     if (!agent.hasPath || agent.velocity.sqrMagnitude == 0f)
                     {
-                        MoveToNewPlace();
+                        if (MoveToNewPlace())
+                        {
+                            if (anim != null)
+                            {
+                                anim.Play(animationStr);
+                            }
+                        }
                     }
                 }
             }
@@ -68,7 +81,24 @@ public class WanderAround : IState
         return false;
     }
 
-    private void MoveToNewPlace() {
+    public bool ExecuteManually() {
+        if (agent.isActiveAndEnabled)
+        {
+            if (!agent.pathPending)
+            {
+                if (agent.remainingDistance <= agent.stoppingDistance)
+                {
+                    if (!agent.hasPath || agent.velocity.sqrMagnitude == 0f)
+                    {
+                        return MoveToNewPlace();
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    private bool MoveToNewPlace() {
         Vector3 point;
         if (RandomPoint(agent.gameObject.transform.position, speed * 5f, out point))
         {
@@ -79,9 +109,8 @@ public class WanderAround : IState
         {
             agent.SetDestination(point);
             agent.speed = speed;
-            if (anim != null) {
-                anim.Play(walk_animation);
-            }
+            return true;
         }
+        return false;
     }
 }

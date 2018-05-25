@@ -9,12 +9,20 @@ public class EatingFood : IState
     float consumingRate;
     NavMeshAgent agent;
     BaseAnimal animal;
-    
+
+    private Animation anim;
+    private const string animationStr = "Arm_cock|eat";
+
     public EatingFood(Food food, float consumingRate, NavMeshAgent agent, BaseAnimal animal) {
         this.food = food;
         this.consumingRate = consumingRate;
         this.agent = agent;
         this.animal = animal;
+
+        if (anim != null)
+        {
+            anim[animationStr].wrapMode = WrapMode.Loop;
+        }
     }
 
     public void Enter()
@@ -29,12 +37,16 @@ public class EatingFood : IState
     public void Execute()
     {
 	    food.Consumed(animal);
+
+        if (anim != null)
+        {
+            anim.Play(animationStr);
+        }
     }
 
     public void Exit()
     {
         food.StopEating(animal);
         animal.RestoreAgentState(ref agent);
-        // Debug.Log(animal.name + " stopped eating");
     }
 }

@@ -26,7 +26,7 @@ public abstract class BaseAnimal : MonoBehaviour {
         foodConsumingRate,
         waterConsumingRate,
         speed;
-    protected bool isBusy;
+    public bool isBusy;
     public enum BusyType
     {
         Grabbed,

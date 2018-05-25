@@ -14,6 +14,9 @@ public class SearchForFood : IState
     private Resting resting;
     private float foodConsumingRate;
 
+    private Animation anim;
+    private const string animationStr = "Arm_cock|Walk_search";
+
     public SearchForFood(LayerMask searchLayer, BaseAnimal animal, float searchRadius,
         string tagToLookFor, NavMeshAgent agent, float foodConsumingRate) {
         this.searchLayer = searchLayer;
@@ -22,6 +25,12 @@ public class SearchForFood : IState
         this.tagToLookFor = tagToLookFor;
         this.agent = agent;
         this.foodConsumingRate = foodConsumingRate;
+        anim = agent.gameObject.GetComponent<Animation>();
+        if (anim != null)
+        {
+            Debug.Log("set searching to loop");
+            anim[animationStr].wrapMode = WrapMode.Loop;
+        }
     }
 
     public void Enter()
@@ -32,17 +41,25 @@ public class SearchForFood : IState
 
     public void Execute()
     {
-        var hitObjects = Physics.OverlapSphere(this.animal.gameObject.transform.position,
-            this.searchRadius, searchLayer);
+        
+        var hitObjects = Physics.OverlapSphere(animal.gameObject.transform.position,
+            searchRadius, searchLayer);
         if (hitObjects.Length == 0) {
             // Just wandering around if no food given
             if (animal.GetEnergyLevel() < 20f)
             {
                 // resting.Execute(); // Can't do this, because the energy level will just float above and below 20f
-                this.animal.GetStateMachine().ChangeState(resting);
+                animal.GetStateMachine().ChangeState(resting);
             }
-            else {
-                wanderAround.Execute();
+            else
+            {
+                if (wanderAround.ExecuteManually()) {
+                    if (anim != null)
+                    {
+                        Debug.Log("searching for stuff...");
+                        anim.Play(animationStr);
+                    }
+                }
             }
             return;
         }
@@ -53,7 +70,7 @@ public class SearchForFood : IState
         // Better performance than foreach
         for (int i=0; i<hitObjects.Length; i++) {
             if (hitObjects[i].CompareTag(tagToLookFor)) {
-                this.agent.SetDestination(hitObjects[i].transform.position);
+                agent.SetDestination(hitObjects[i].transform.position);
                 if(Vector3.Distance(new Vector3(animal.gameObject.transform.position.x, animal.gameObject.transform.position.y, 0f), 
                     new Vector3(hitObjects[i].transform.position.x, hitObjects[i].transform.position.y, 0f)) < 1f){
                         
@@ -61,7 +78,7 @@ public class SearchForFood : IState
                     foodConsumingRate, agent, animal));
 
 
-                    Debug.Log(animal.GetStateMachine().GetCurrentState());
+                    // Debug.Log(animal.GetStateMachine().GetCurrentState());
                 }
             }
             return;
@@ -72,5 +89,9 @@ public class SearchForFood : IState
 
     public void Exit()
     {
+        //if (anim != null)
+        //{
+        //    anim.Stop();
+        //}
     }
 }
