@@ -7,10 +7,17 @@ public class Resting : IState
 {
     private BaseAnimal animal;
     private NavMeshAgent agent;
+    private Animation anim;
+    private const string animationStr = "Arm_cock|idle_1";
 
     public Resting(BaseAnimal animal, NavMeshAgent agent) {
         this.animal = animal;
         this.agent = agent;
+        anim = agent.gameObject.GetComponent<Animation>();
+        if (anim != null)
+        {
+            anim[animationStr].wrapMode = WrapMode.Loop;
+        }
     }
 
     public void Enter()
@@ -26,6 +33,10 @@ public class Resting : IState
     public void Execute()
     {
         animal.UpdateEnergyLevel(Time.deltaTime * 2f);
+        if (anim != null)
+        {
+            anim.Play(animationStr);
+        }
 
         if (animal.GetEnergyLevel() >= 80f) {
             // No need to rest

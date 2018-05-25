@@ -8,7 +8,7 @@ public class WanderAround : IState
     private NavMeshAgent agent;
     private float speed;
     private Animation anim;
-    private const string walk_animation = "Arm_cock|Walk_slow";
+    private const string walk_animation = "Arm_cock|Walk_fast";
 
     public WanderAround(NavMeshAgent agent, float speed) {
         this.agent = agent;
@@ -42,7 +42,11 @@ public class WanderAround : IState
 
     public void Exit()
     {
-        if(agent.isActiveAndEnabled)
+        if (anim != null)
+        {
+            anim.Stop();
+        }
+        if (agent.isActiveAndEnabled)
             agent.SetDestination(agent.gameObject.transform.position);
     }
 
