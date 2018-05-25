@@ -7,10 +7,16 @@ public class WanderAround : IState
 {
     private NavMeshAgent agent;
     private float speed;
+    private Animation anim;
+    private const string walk_animation = "Arm_cock|Walk_slow";
 
     public WanderAround(NavMeshAgent agent, float speed) {
         this.agent = agent;
         this.speed = speed;
+        anim = agent.gameObject.GetComponent<Animation>();
+        if (anim != null) {
+            anim[walk_animation].wrapMode = WrapMode.Loop;
+        }
     }
     public void Enter()
     {
@@ -69,6 +75,9 @@ public class WanderAround : IState
         {
             agent.SetDestination(point);
             agent.speed = speed;
+            if (anim != null) {
+                anim.Play(walk_animation);
+            }
         }
     }
 }

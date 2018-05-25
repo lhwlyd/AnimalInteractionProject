@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.AI;
 
 [RequireComponent(typeof(NavMeshAgent))]
+[RequireComponent(typeof(Grabable))]
+[RequireComponent(typeof(Interactable))]
 public class Chicken : BaseAnimal
 {
     float timer;
