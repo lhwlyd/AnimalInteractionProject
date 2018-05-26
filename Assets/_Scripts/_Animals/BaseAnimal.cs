@@ -118,6 +118,7 @@ public abstract class BaseAnimal : MonoBehaviour {
         switch (busyType) {
             case BusyType.Grabbed:
                 RecordAgentState(ref agent);
+                stateMachine = new StateMachine();
                 stateMachine.ChangeState(new Grabbed(agent));
             break;
 
@@ -132,6 +133,12 @@ public abstract class BaseAnimal : MonoBehaviour {
 
     public void ExitBusy(){
         isBusy = false;
+    }
+
+    public void ExitBusyWithStateChange(IState state)
+    {
+        isBusy = false;
+        stateMachine.ChangeState(state);
     }
 
     public bool IsBusy() {

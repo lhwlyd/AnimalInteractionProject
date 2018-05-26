@@ -101,7 +101,7 @@ public class Interactable : MonoBehaviour
         var pettingVector = transform.forward;
         var petted = Vector3.Angle(velocity, transform.forward) >= 140;
         var mag = Vector3.Magnitude(velocity);
-        Debug.Log(mag);
+        //Debug.Log(mag);
         if(!OnPet(petted, mag))
             OnInjure(mag);
 

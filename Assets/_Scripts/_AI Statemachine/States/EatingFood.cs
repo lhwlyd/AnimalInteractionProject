@@ -48,6 +48,6 @@ public class EatingFood : IState
     {
         animal.ExitBusy();
         food.StopEating(animal);
-        animal.RestoreAgentState(ref agent);
+        // animal.RestoreAgentState(ref agent);
     }
 }

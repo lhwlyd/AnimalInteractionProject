@@ -22,7 +22,8 @@ public abstract class Edible : MonoBehaviour
     {
         this.consumeRate += consumingRate;
         beingEaten = true;
-        eaters.Add(consumer, consumingRate);
+        if (!eaters.ContainsKey(consumer))
+            eaters.Add(consumer, consumingRate);
     }
 
     public void StopEating(BaseAnimal consumer)

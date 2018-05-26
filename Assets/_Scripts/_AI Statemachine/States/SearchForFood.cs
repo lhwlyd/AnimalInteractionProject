@@ -64,7 +64,7 @@ public class SearchForFood : IState
             return;
         }
 
-        if (animal.GetHungerLevel() > 80f) {
+        if (animal.GetHungerLevel() > 80.0f) {
             Debug.Log("no longer needs to search for food");
             // Debug.Break();
             // animal.GetStateMachine().SwtichToPreviousState();
