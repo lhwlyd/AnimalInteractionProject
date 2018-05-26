@@ -31,6 +31,7 @@ public class StateMachine {
 
     public void SwtichToPreviousState() {
         currentlyRunningState.Exit();
+        Debug.Log(previousState);
         currentlyRunningState = previousState;
         currentlyRunningState.Enter();
     }

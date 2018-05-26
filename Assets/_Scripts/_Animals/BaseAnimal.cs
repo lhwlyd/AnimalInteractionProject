@@ -42,7 +42,8 @@ public abstract class BaseAnimal : MonoBehaviour {
     protected Vector3 lastAgentVelocity;
     protected NavMeshPath lastAgentPath;
     protected Vector3 lastAgentDestination;
-
+    
+    public bool searching;
     //protected AnimalState stateManager;
     protected StateMachine stateMachine = new StateMachine();
 
@@ -97,6 +98,11 @@ public abstract class BaseAnimal : MonoBehaviour {
 
     public float GetIntimateLevel() {
         return intimateLevel;
+    }
+
+    public float GetSpeed()
+    {
+        return speed;
     }
 
     public void UpdateAggresionLevel(float update) {

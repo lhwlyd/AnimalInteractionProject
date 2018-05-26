@@ -65,30 +65,40 @@ public class SearchForFood : IState
         }
 
         if (animal.GetHungerLevel() > 80f && animal.GetThirstLevel() > 50f) {
+            Debug.Log("no longer needs to search");
+            animal.ExitBusy();
             animal.GetStateMachine().ChangeState(wanderAround);
         }
+
+        var index = -1;
+
         // Better performance than foreach
         for (int i=0; i<hitObjects.Length; i++) {
             if (hitObjects[i].CompareTag(tagToLookFor)) {
                 agent.SetDestination(hitObjects[i].transform.position);
                 if(Vector3.Distance(new Vector3(animal.gameObject.transform.position.x, animal.gameObject.transform.position.y, 0f), 
                     new Vector3(hitObjects[i].transform.position.x, hitObjects[i].transform.position.y, 0f)) < 1f){
-                        
-                    animal.GetStateMachine().ChangeState(new EatingFood(hitObjects[i].gameObject.GetComponent<Food>(), 
-                    foodConsumingRate, agent, animal));
 
+                    index = i;
+                    break;
 
                     // Debug.Log(animal.GetStateMachine().GetCurrentState());
                 }
             }
-            return;
+            
         }
 
-        // No food found, stay where it is
+        if(index > -1)
+        {
+            
+            animal.GetStateMachine().ChangeState(new EatingFood(hitObjects[index].gameObject.GetComponent<Food>(),
+                    foodConsumingRate, agent, animal));
+        }
     }
 
     public void Exit()
     {
+        Debug.Log("DONE SEARCHING");
         //if (anim != null)
         //{
         //    anim.Stop();

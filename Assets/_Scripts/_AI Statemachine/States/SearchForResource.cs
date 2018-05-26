@@ -17,7 +17,7 @@ public class SearchForResource : IState
 
     private SearchForFood searchForFood;
     private SearchForWater searchForWater;
-    private StateMachine microManager;
+    //private StateMachine microManager;
 
 
     public SearchForResource(LayerMask searchLayer1, LayerMask searchLayer2, BaseAnimal animal, float searchRadius,
@@ -39,28 +39,38 @@ public class SearchForResource : IState
 
         searchForFood = new SearchForFood(searchLayer1, animal, searchRadius, "Food", agent, foodConsumingRate);
         searchForWater = new SearchForWater(searchLayer2, animal, searchRadius, "Water", agent, waterConsumingRate);
-        microManager = new StateMachine();
+        //microManager = new StateMachine();
 
         animal.SetBusy(BaseAnimal.BusyType.SearchingForResource);
     }
 
     public void Execute()
     {
-        // Debug.Log("looking for resources");
-        if (animal.GetHungerLevel() < animal.GetThirstLevel()) 
-            // So far this condition checking should be safe.
+        Debug.Log("looking for resources");
+
+        if (animal.GetHungerLevel() < animal.GetThirstLevel())
+        // So far this condition checking should be safe.
         {
             // Debug.Log("Searching for food!");
-            microManager.ChangeState(searchForFood);
+            animal.GetStateMachine().ChangeState(searchForFood);
         }
-        else {
+        else if (animal.GetHungerLevel() > animal.GetThirstLevel())
+        {
             // Debug.Log("Searching for water!");
-            microManager.ChangeState(searchForWater);
+            animal.GetStateMachine().ChangeState(searchForWater);
         }
-
+        else
+        {
+            //microManager = null;
+            animal.ExitBusy();
+            animal.searching = false;
+            animal.GetStateMachine().ChangeState(new WanderAround(agent, animal.GetSpeed()));
+            return;
+        }
     }
 
     public void Exit()
     {
+        animal.ExitBusy();
     }
 }

@@ -12,12 +12,12 @@ public class Food : Edible {
 
     public override void Consumed(BaseAnimal animal)
     {
-        if (this.foodLeft > 0)
+        if (foodLeft > 0)
         {
             float update = Time.deltaTime * eaters[animal];
-            this.foodLeft -= update;
+            foodLeft -= update;
             animal.UpdateHungerLevel(update);
-            Debug.Log(this.foodLeft);
+            Debug.Log(foodLeft);
         }
         else
         {
@@ -25,7 +25,7 @@ public class Food : Edible {
             animal.SwitchToPreviousState();
             if (eaters.Count == 0)
             {
-                Destroy(this.gameObject);
+                Destroy(gameObject);
             }
         }
     }

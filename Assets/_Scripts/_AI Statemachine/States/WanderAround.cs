@@ -20,6 +20,7 @@ public class WanderAround : IState
     }
     public void Enter()
     {
+        agent.GetComponent<BaseAnimal>().ExitBusy();
         if (MoveToNewPlace()) {
             if (anim != null)
             {

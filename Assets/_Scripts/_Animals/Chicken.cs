@@ -43,10 +43,14 @@ public class Chicken : BaseAnimal
     {
         stateMachine.ExecuteStateUpdate();
         if (!IsBusy()) {
-            if ((hungerLevel < 30f || thirstLevel < 30f))
+            if ((hungerLevel < 30.0f || thirstLevel < 30.0f) && !searching)
             {
                 stateMachine.ChangeState(
                     new SearchForResource(foodItemsLayer, waterItemsLayer, this, speed * 15f, agent, foodConsumingRate, waterConsumingRate));
+                searching = true;
+            } else
+            {
+                searching = false;
             }
 
             if (energyLevel < 20f) {
