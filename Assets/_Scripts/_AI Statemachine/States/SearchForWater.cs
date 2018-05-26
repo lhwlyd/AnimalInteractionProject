@@ -33,15 +33,15 @@ public class SearchForWater : IState
 
     public void Execute()
     {
-        var hitObjects = Physics.OverlapSphere(this.animal.gameObject.transform.position,
-            this.searchRadius, searchLayer);
+        var hitObjects = Physics.OverlapSphere(animal.gameObject.transform.position,
+            searchRadius, searchLayer);
         if (hitObjects.Length == 0)
         {
             // Just wandering around if no food given
             if (animal.GetEnergyLevel() < 20f)
             {
                 // resting.Execute(); // Can't do this, because the energy level will just float above and below 20f
-                this.animal.GetStateMachine().ChangeState(resting);
+                animal.GetStateMachine().ChangeState(resting);
             }
             else
             {
@@ -52,8 +52,11 @@ public class SearchForWater : IState
 
         if (animal.GetThirstLevel() > 80f && animal.GetHungerLevel() > 50f)
         {
-            animal.GetStateMachine().ChangeState(wanderAround);
+            animal.GetStateMachine().SwtichToPreviousState();
         }
+
+        var index = -1;
+
         // Better performance than foreach
         for (int i = 0; i < hitObjects.Length; i++)
         {
@@ -64,14 +67,16 @@ public class SearchForWater : IState
                     new Vector3(hitObjects[i].transform.position.x, hitObjects[i].transform.position.y, 0f)) < 1f)
                 {
 
-                    animal.GetStateMachine().ChangeState(new DrinkingWater(hitObjects[i].gameObject.GetComponent<Water>(),
-                    waterConsumingRate, agent, animal));
-
-
-                    Debug.Log(animal.GetStateMachine().GetCurrentState());
+                    index = i;
+                    break;
                 }
             }
-            return;
+        }
+
+        if(index > -1)
+        {
+            animal.GetStateMachine().ChangeState(new DrinkingWater(hitObjects[index].gameObject.GetComponent<Water>(),
+                    waterConsumingRate, agent, animal));
         }
 
         // No food found, stay where it is

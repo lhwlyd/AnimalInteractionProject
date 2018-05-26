@@ -64,10 +64,12 @@ public class SearchForFood : IState
             return;
         }
 
-        if (animal.GetHungerLevel() > 80f && animal.GetThirstLevel() > 50f) {
-            Debug.Log("no longer needs to search");
-            animal.ExitBusy();
+        if (animal.GetHungerLevel() > 80f) {
+            Debug.Log("no longer needs to search for food");
+            // Debug.Break();
+            // animal.GetStateMachine().SwtichToPreviousState();
             animal.GetStateMachine().ChangeState(wanderAround);
+            return;
         }
 
         var index = -1;
@@ -99,9 +101,6 @@ public class SearchForFood : IState
     public void Exit()
     {
         Debug.Log("DONE SEARCHING");
-        //if (anim != null)
-        //{
-        //    anim.Stop();
-        //}
+        // animal.GetStateMachine().ChangeState(wanderAround);
     }
 }
