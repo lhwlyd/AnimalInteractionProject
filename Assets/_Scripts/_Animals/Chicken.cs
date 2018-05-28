@@ -45,11 +45,11 @@ public class Chicken : BaseAnimal
         if (!IsBusy()) {
             if ((IsHungry() || IsThirsty()) && !searching)
             {
-                stateMachine.ChangeState(
-                    new SearchForResource(foodItemsLayer, waterItemsLayer, this, speed * 15f, agent, foodConsumingRate, waterConsumingRate));
+                SetBusy(BusyType.SearchingForResource);
                 searching = true;
             } else
             {
+                ExitBusy();
                 searching = false;
             }
 

@@ -40,7 +40,7 @@ public class SearchForResource : IState
         searchForFood = new SearchForFood(searchLayer1, animal, searchRadius, "Food", agent, foodConsumingRate);
         searchForWater = new SearchForWater(searchLayer2, animal, searchRadius, "Water", agent, waterConsumingRate);
 
-        animal.SetBusy(BaseAnimal.BusyType.SearchingForResource);
+        //animal.SetBusy(BaseAnimal.BusyType.SearchingForResource);
     }
 
     public void Execute()
@@ -66,6 +66,6 @@ public class SearchForResource : IState
 
     public void Exit()
     {
-        animal.ExitBusy();
+        // animal.ExitBusy();
     }
 }

@@ -142,6 +142,11 @@ public abstract class BaseAnimal : MonoBehaviour {
                 stateMachine.ChangeState(new Grabbed(agent));
             break;
 
+            case BusyType.SearchingForResource:
+                stateMachine.ChangeState(
+                    new SearchForResource(foodItemsLayer, waterItemsLayer, this, speed * 15f, agent, foodConsumingRate, waterConsumingRate));
+                break;
+
             case BusyType.Hurt:
                 break;
 
@@ -197,7 +202,7 @@ public abstract class BaseAnimal : MonoBehaviour {
 
     void OnFetch(Throwable other) {
         if (IsThirsty() || IsHungry()) return;
-        if (BusyState == BusyType.Ingesting) return;
+        if (BusyState != BusyType.NotBusy) return;
 
         Debug.Log("Fetching object at: " + other.transform.position);
 
