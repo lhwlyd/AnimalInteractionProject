@@ -26,18 +26,18 @@ public class FetchState : IState {
 
     public void Execute()
     {
-        Debug.Log("Fetching");
-        if(anim != null)
+        if (anim != null)
         {
+            Debug.Log("Should animate");
             anim.Play(animationStr);
         }
     }
 
     public void Exit()
     {
-        if(anim != null)
-        {
-            anim.Stop();
-        }
+        //if(anim != null)
+        //{
+        //    anim.Stop();
+        //}
     }
 }

@@ -196,14 +196,11 @@ public abstract class BaseAnimal : MonoBehaviour {
 
     void OnLaser(Vector3 point)
     {
-        if (BusyState != BusyType.NotBusy || IsThirsty() || IsHungry())  return;
-        if (!isBusy)
-        {
-            Debug.Log("Activate laser chasing state here");
-            Debug.Log(point);
-            agent.ResetPath();
-            agent.SetDestination(point);
-        }
+        if (BusyState != BusyType.NotBusy) return;
+        Debug.Log("Activate laser chasing state here");
+        Debug.Log(point);
+        // agent.ResetPath();
+        agent.SetDestination(point);
     }
 
     void OnFetch(Throwable other) {
@@ -219,7 +216,7 @@ public abstract class BaseAnimal : MonoBehaviour {
 
         agent.SetDestination(pos);
         var distance = Vector3.Distance(pos, transform.position);
-        Debug.Log(distance);
+        // Debug.Log(distance);
         if (distance < 1.0f)
         {
 
