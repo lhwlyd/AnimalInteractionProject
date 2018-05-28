@@ -220,7 +220,7 @@ public abstract class BaseAnimal : MonoBehaviour {
         agent.SetDestination(pos);
         var distance = Vector3.Distance(pos, transform.position);
         Debug.Log(distance);
-        if (distance < 1.5f)
+        if (distance < 1.0f)
         {
 
             var fetch = transform.Find("FetchLoc");
