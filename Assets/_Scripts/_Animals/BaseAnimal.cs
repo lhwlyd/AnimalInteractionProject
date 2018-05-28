@@ -168,4 +168,8 @@ public abstract class BaseAnimal : MonoBehaviour {
             agent.SetDestination(point);
         }
     }
+
+    void OnFetch(Throwable other) {
+        Debug.Log("Fetching object at: " + other.transform.position);
+    }
 } 

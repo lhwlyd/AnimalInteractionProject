@@ -2,11 +2,30 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(SphereCollider))]
 public class Throwable : MonoBehaviour {
 
     public float velocityMultiplier = 5;
+    public AnimalManager animalManager;
 
-	void OnRelease(Vector3 velocity)
+    public bool thrown = false;
+    public bool hitFloor = false;
+
+    private void Start()
+    {
+        animalManager = GameObject.Find("Director").GetComponent<AnimalManager>();
+    }
+
+    private void Update()
+    {
+        if (thrown && hitFloor && animalManager != null)
+        {
+            animalManager.BroadcastEventToAnimals("OnFetch", this);
+        }
+    }
+
+    void OnRelease(Vector3 velocity)
     {
         Debug.Log("Animal should fetch the ball");
         Debug.Log(velocity.magnitude);
@@ -22,10 +41,15 @@ public class Throwable : MonoBehaviour {
         if(collider != null) {
             collider.isTrigger = false;
         }
+
+        thrown = true;
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log("THROWABLE HIT SOMETHING");
+        if (collision.transform.CompareTag("Floor"))
+        {
+            hitFloor = true;
+        }
     }
 }
