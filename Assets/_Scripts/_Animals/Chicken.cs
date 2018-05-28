@@ -42,20 +42,26 @@ public class Chicken : BaseAnimal
     private void Update()
     {
         stateMachine.ExecuteStateUpdate();
-        if (!IsBusy()) {
+        // if not resting, check to see if should be resting
+        if (BusyState != BusyType.Resting) {
+            if (energyLevel < 20f)
+            {
+                //stateMachine.ChangeState(new Resting(this, agent));
+                SetBusy(BusyType.Resting);
+            }
+        }
+        // if not busy, check to see what can be done
+        if (BusyState == BusyType.NotBusy) {
+            
             if ((IsHungry() || IsThirsty()) && !searching)
             {
-                SetBusy(BusyType.SearchingForResource);
                 searching = true;
+                SetBusy(BusyType.SearchingForResource);
+                
             } else
             {
                 ExitBusy();
                 searching = false;
-            }
-
-            if (energyLevel < 20f) {
-                //stateMachine.ChangeState(new Resting(this, agent));
-                SetBusy(BusyType.Resting);
             }
         }
 

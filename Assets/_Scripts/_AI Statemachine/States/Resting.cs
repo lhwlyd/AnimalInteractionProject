@@ -22,12 +22,13 @@ public class Resting : IState
 
     public void Enter()
     {
-        animal.SetBusy(BaseAnimal.BusyType.Resting);
+        // animal.SetBusy(BaseAnimal.BusyType.Resting);
 
-        if(agent.isActiveAndEnabled)
-            agent.SetDestination(animal.gameObject.transform.position);
+        //if(agent.isActiveAndEnabled)
+        //    agent.SetDestination(animal.gameObject.transform.position);
 
         // Play sound(snoring), animations
+        agent.isStopped = true;
     }
 
     public void Execute()
@@ -38,7 +39,8 @@ public class Resting : IState
             anim.Play(animationStr);
         }
 
-        if (animal.GetEnergyLevel() >= 80f) {
+        if (animal.GetEnergyLevel() >= 80f)
+        {
             // No need to rest
             animal.ExitBusy();
             //animal.GetStateMachine().SwtichToPreviousState();
@@ -52,6 +54,7 @@ public class Resting : IState
         {
             anim.Stop();
         }
-        animal.ExitBusy();
+        agent.isStopped = false;
+        // animal.ExitBusy();
     }
 }

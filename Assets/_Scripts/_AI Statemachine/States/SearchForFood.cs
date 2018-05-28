@@ -46,21 +46,22 @@ public class SearchForFood : IState
             searchRadius, searchLayer);
         if (hitObjects.Length == 0) {
             // Just wandering around if no food given
-            if (animal.GetEnergyLevel() < 20f)
+            //if (animal.GetEnergyLevel() < 20f)
+            //{
+            //    animal.GetStateMachine().SwtichToPreviousState();
+            //    return;
+            //}
+            //else
+            //{
+            if (wanderAround.ExecuteManually())
             {
-                // resting.Execute(); // Can't do this, because the energy level will just float above and below 20f
-                animal.GetStateMachine().ChangeState(resting);
-            }
-            else
-            {
-                if (wanderAround.ExecuteManually()) {
-                    if (anim != null)
-                    {
-                        // Debug.Log("searching for stuff...");
-                        anim.Play(animationStr);
-                    }
+                if (anim != null)
+                {
+                    // Debug.Log("searching for stuff...");
+                    anim.Play(animationStr);
                 }
             }
+            //}
             return;
         }
 
@@ -68,7 +69,8 @@ public class SearchForFood : IState
             // Debug.Log("no longer needs to search for food");
             // Debug.Break();
             // animal.GetStateMachine().SwtichToPreviousState();
-            animal.GetStateMachine().ChangeState(wanderAround);
+            // animal.GetStateMachine().ChangeState(wanderAround);
+            animal.ExitBusyWithStateChange(wanderAround);
             return;
         }
 

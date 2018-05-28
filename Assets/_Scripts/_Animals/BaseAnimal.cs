@@ -165,6 +165,11 @@ public abstract class BaseAnimal : MonoBehaviour {
 
     }
 
+    public void ResetStateMachine()
+    {
+        stateMachine = new StateMachine();
+    }
+
     public void ExitBusy(){
         isBusy = false;
         BusyState = BusyType.NotBusy;

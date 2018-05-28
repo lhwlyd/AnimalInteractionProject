@@ -3,16 +3,7 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags:
-  - leftHand
-  - rightHand
-  - Food
-  - Turtle
-  - Water
-  - particle_hearts
-  - particle_injure
-  - Floor
-  - Director
+  tags: []
   layers:
   - Default
   - TransparentFX
@@ -22,8 +13,8 @@ TagManager:
   - UI
   - 
   - 
-  - FoodLayer
-  - Grabbable
+  - 
+  - 
   - 
   - 
   - 
