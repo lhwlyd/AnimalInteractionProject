@@ -11,14 +11,21 @@ public class LaserPen : MonoBehaviour {
 
     public AnimalManager animalManager;
 
+    public bool Grabbed;
+
+    public Vector3 origPos;
+    public Quaternion origRotation;
+
     void Start() {
         animalManager = GameObject.Find("Director").GetComponent<AnimalManager>();
+        origPos = transform.position;
+        origRotation = transform.rotation;
     }
 
     // Update is called once per frame
     void Update () {
         RaycastHit hit;
-        if (Physics.Raycast(transform.position, transform.up, out hit))
+        if (Physics.Raycast(transform.position, transform.up, out hit) && Grabbed)
         { // all layers except the second layer(ignore ray cast)
             
             if (laserDot == null)
@@ -41,10 +48,21 @@ public class LaserPen : MonoBehaviour {
             if(animalManager != null && hit.transform.CompareTag("Floor"))
                 animalManager.BroadcastEventToAnimals<Vector3>("OnLaser", hit.point);
         }
-        else {
+
+        if(!Grabbed) {
             laserLine.gameObject.SetActive(false);
             if (laserDot != null) laserDot.SetActive(false);
         }
 
+    }
+
+    void OnGrab() {
+        Grabbed = true;
+    }
+
+    void OnRelease() {
+        Grabbed = false;
+        transform.position = origPos;
+        transform.rotation = origRotation;
     }
 }

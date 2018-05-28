@@ -38,16 +38,11 @@ public class Grabable : MonoBehaviour
                 if (gesture != null)
                 {
                     bool grabbing = gesture.IsGrabbing();
-                    // Debug.Log(grabbing);
                     if (gesture.IsGrabbing())
                     {
-                        // Debug.Log("still grabbing...");
+                        gameObject.SendMessage("OnGrab", GrabbingHandRef.GetComponent<IHandGesture>().GetVelocity(), SendMessageOptions.DontRequireReceiver);
                         Grabbed();
                     }
-                    // else
-                    // {
-                    //     ReleaseGrabbing();
-                    // }
                 }
             }
         }

@@ -197,9 +197,7 @@ public abstract class BaseAnimal : MonoBehaviour {
     void OnLaser(Vector3 point)
     {
         if (BusyState != BusyType.NotBusy) return;
-        Debug.Log("Activate laser chasing state here");
-        Debug.Log(point);
-        // agent.ResetPath();
+        // Debug.Log(point);
         agent.SetDestination(point);
     }
 
