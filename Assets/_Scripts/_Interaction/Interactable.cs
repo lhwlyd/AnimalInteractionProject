@@ -25,6 +25,10 @@ public class Interactable : MonoBehaviour
 
     public Vector3 previousPos = new Vector3();
 
+    private Vector3 velocity = new Vector3();
+
+    public Vector3 Velocity { get { return velocity; } }
+
     // Use this for initialization
     void Start()
     {
@@ -94,7 +98,7 @@ public class Interactable : MonoBehaviour
 
         var currPos = PettingObjectRef.transform.position;
 
-        var velocity = (currPos - previousPos) / Time.deltaTime;
+        velocity = (currPos - previousPos) / Time.deltaTime;
 
         previousPos = currPos;
 

@@ -94,6 +94,7 @@ public class Grabable : MonoBehaviour
     private void ReleaseGrabbing()
     {
         Debug.Log("RELEASING!!!");
+        gameObject.SendMessage("OnRelease", GrabbingHandRef.GetComponent<IHandGesture>().GetVelocity(), SendMessageOptions.DontRequireReceiver);
         transform.parent = null;
         grabbed = false;
         if(animalComponentRef != null) {

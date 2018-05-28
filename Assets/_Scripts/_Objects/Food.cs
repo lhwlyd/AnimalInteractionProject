@@ -17,11 +17,11 @@ public class Food : Edible {
             float update = Time.deltaTime * eaters[animal];
             foodLeft -= update;
             animal.UpdateHungerLevel(update);
-            Debug.Log(foodLeft);
+            // Debug.Log(foodLeft);
         }
         else
         {
-            Debug.Log("food ran out");
+            // Debug.Log("food ran out");
             animal.SwitchToPreviousState();
             if (eaters.Count == 0)
             {

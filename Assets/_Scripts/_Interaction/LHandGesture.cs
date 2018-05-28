@@ -6,6 +6,11 @@ public class LHandGesture : MonoBehaviour, IHandGesture {
 
     public LeapGestures playerAnimalGesturesRef;
 
+    public Vector3 GetVelocity()
+    {
+        throw new System.NotImplementedException();
+    }
+
     public bool IsGrabbing() {
         if (playerAnimalGesturesRef == null) return false;
         return playerAnimalGesturesRef.LeftHandGrabStrength() > .5f;
