@@ -47,7 +47,8 @@ public class LaserPen : MonoBehaviour {
         else {
             Debug.Log("NOT HITTING ANYTHING");
             laserLine.gameObject.SetActive(false);
+            if(laserInstance) Destroy(laserInstance.gameObject);
         }
-        
+
     }
 }

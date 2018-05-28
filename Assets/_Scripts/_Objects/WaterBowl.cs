@@ -38,7 +38,8 @@ public class WaterBowl : MonoBehaviour {
     {
         waterPoints++;
         if (waterPoints > 100) {
-            Instantiate(waterDrop, waterGenerationPoint.position, Quaternion.identity);
+            GameObject water = Instantiate(waterDrop, waterGenerationPoint.position, Quaternion.identity) as GameObject;
+            water.transform.position = water.transform.position + new Vector3(Random.Range(0, 0.1f), Random.Range(0, 0.1f), Random.Range(0, 0.1f));
             waterPoints = 0;
         }
 

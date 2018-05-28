@@ -23,7 +23,8 @@ public class FoodCan : MonoBehaviour {
         if (Vector3.Dot(transform.up, Vector3.down) > 0)
         {
             if (time >= foodOutTimer) {
-                GameObject newFood = Instantiate(food, generatePoint);
+                GameObject newFood = Instantiate(food, generatePoint );
+                newFood.transform.position = newFood.transform.position + new Vector3(Random.Range(0,0.1f), Random.Range(0, 0.1f), Random.Range(0, 0.1f));
                 newFood.transform.SetParent(null);
                 foodLeft--;
                 time = 0;
