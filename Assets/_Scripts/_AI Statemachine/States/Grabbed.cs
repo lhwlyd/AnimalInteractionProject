@@ -7,9 +7,16 @@ using UnityEngine.AI;
 public class Grabbed : IState
 {
     NavMeshAgent agent;
+    private Animation anim;
+    private const string animationStr = "Arm_cock|idle_2";
 
     public Grabbed(NavMeshAgent agent) {
         this.agent = agent;
+        anim = agent.gameObject.GetComponent<Animation>();
+        if (anim != null)
+        {
+            anim[animationStr].wrapMode = WrapMode.Loop;
+        }
     }
 
     public void Enter()
@@ -20,10 +27,19 @@ public class Grabbed : IState
     public void Execute()
     {
         Debug.Log("I'm being grabbed!");
+        if (anim != null)
+        {
+            anim.Play(animationStr);
+        }
     }
 
     public void Exit()
     {
         agent.enabled = true;
+
+        if (anim != null)
+        {
+            anim.Stop();
+        }
     }
 }
