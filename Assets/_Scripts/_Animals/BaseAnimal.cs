@@ -27,14 +27,16 @@ public abstract class BaseAnimal : MonoBehaviour {
         waterConsumingRate,
         speed;
     public bool isBusy;
+    public BusyType BusyState = BusyType.NotBusy;
     public enum BusyType
     {
+        NotBusy,
         Grabbed,
         Hurt,
         Ingesting,
         SearchingForResource,
         Resting,
-        ChasingLaser
+        Fetching
     };
 
     protected NavMeshAgent agent;
@@ -45,6 +47,9 @@ public abstract class BaseAnimal : MonoBehaviour {
     protected Vector3 lastAgentDestination;
     
     public bool searching;
+
+    public float hungerLimit = 30.0f;
+    public float thirstLimit = 30.0f;
     //protected AnimalState stateManager;
     protected StateMachine stateMachine = new StateMachine();
 
@@ -55,6 +60,14 @@ public abstract class BaseAnimal : MonoBehaviour {
     public abstract void Drink(float waterPoints);
 
     public abstract void Injured(float damage);
+
+    public bool IsHungry() {
+        return hungerLevel < hungerLimit;
+    }
+
+    public bool IsThirsty() {
+        return thirstLevel < thirstLimit;
+    }
 
     public void RecordAgentState(ref NavMeshAgent agent) {
         lastAgentVelocity = agent.velocity;
@@ -119,7 +132,9 @@ public abstract class BaseAnimal : MonoBehaviour {
     }
 
     public void SetBusy(BusyType busyType) {
+        if (busyType == BusyType.NotBusy) return;
         isBusy = true;
+        BusyState = busyType;
         switch (busyType) {
             case BusyType.Grabbed:
                 RecordAgentState(ref agent);
@@ -132,12 +147,22 @@ public abstract class BaseAnimal : MonoBehaviour {
 
             case BusyType.Ingesting:
                 break;
+
+            case BusyType.Resting:
+                stateMachine.ChangeState(new Resting(this, agent));
+                break;
+
+            case BusyType.Fetching:
+                RecordAgentState(ref agent);
+                stateMachine.ChangeState(new FetchState(agent));
+                break;
         }
 
     }
 
     public void ExitBusy(){
         isBusy = false;
+        BusyState = BusyType.NotBusy;
     }
 
     public void ExitBusyWithStateChange(IState state)
@@ -170,6 +195,49 @@ public abstract class BaseAnimal : MonoBehaviour {
     }
 
     void OnFetch(Throwable other) {
+        if (IsThirsty() || IsHungry()) return;
+        if (BusyState == BusyType.Ingesting) return;
+
         Debug.Log("Fetching object at: " + other.transform.position);
+
+        if (!isBusy)
+        {
+            SetBusy(BusyType.Fetching);
+        }
+        var pos = other.transform.position;
+
+        agent.SetDestination(pos);
+
+        if(Vector3.Distance(pos, transform.position) < 0.3)
+        {
+
+            var fetch = transform.Find("FetchLoc");
+            if (fetch == null)
+                other.transform.parent = transform;
+            else
+            {
+                other.transform.position = Vector3.zero;
+                other.transform.SetParent(fetch, false);//.parent = fetch;
+                
+            }
+            other.Reset();
+        }
+    }
+
+    void OnReturnFetch(Throwable other)
+    {
+        Debug.Log("Returning object to player");
+
+        var pos = playerRef.transform.position;
+        agent.SetDestination(pos);
+
+        var distance = Vector3.Distance(transform.position, pos);
+        Debug.Log(distance);
+        if (distance < 1.5f)
+        {
+            other.ReturnThrowable();
+            other.transform.parent = null;
+            ExitBusyWithStateChange(new WanderAround(agent, speed));
+        }
     }
 } 

@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+public class FetchState : IState {
 
-public class Grabbed : IState
-{
     NavMeshAgent agent;
     private Animation anim;
-    private const string animationStr = "Arm_cock|kukareku";
+    private const string animationStr = "Arm_cock|Walk_fast";
 
-    public Grabbed(NavMeshAgent agent) {
+    public FetchState(NavMeshAgent agent)
+    {
         this.agent = agent;
         anim = agent.gameObject.GetComponent<Animation>();
         if (anim != null)
@@ -21,13 +21,13 @@ public class Grabbed : IState
 
     public void Enter()
     {
-        agent.enabled = false;
+        
     }
 
     public void Execute()
     {
-        Debug.Log("I'm being grabbed!");
-        if (anim != null)
+        Debug.Log("Fetching");
+        if(anim != null)
         {
             anim.Play(animationStr);
         }
@@ -35,9 +35,7 @@ public class Grabbed : IState
 
     public void Exit()
     {
-        agent.enabled = true;
-
-        if (anim != null)
+        if(anim != null)
         {
             anim.Stop();
         }

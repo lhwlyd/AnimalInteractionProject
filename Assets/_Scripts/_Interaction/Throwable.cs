@@ -8,13 +8,19 @@ public class Throwable : MonoBehaviour {
 
     public float velocityMultiplier = 5;
     public AnimalManager animalManager;
+    private Rigidbody rigidBody;
+    private SphereCollider sphereCollider;
 
     public bool thrown = false;
     public bool hitFloor = false;
+    public bool fetched = false;
 
     private void Start()
     {
         animalManager = GameObject.Find("Director").GetComponent<AnimalManager>();
+
+        rigidBody = GetComponent<Rigidbody>();
+        sphereCollider = GetComponent<SphereCollider>();
     }
 
     private void Update()
@@ -22,6 +28,9 @@ public class Throwable : MonoBehaviour {
         if (thrown && hitFloor && animalManager != null)
         {
             animalManager.BroadcastEventToAnimals("OnFetch", this);
+        } else if(fetched && animalManager != null)
+        {
+            animalManager.BroadcastEventToAnimals("OnReturnFetch", this);
         }
     }
 
@@ -30,18 +39,11 @@ public class Throwable : MonoBehaviour {
         Debug.Log("Animal should fetch the ball");
         Debug.Log(velocity.magnitude);
 
-        var rigidbody = GetComponent<Rigidbody>();
-        var collider = GetComponent<SphereCollider>();
-
-        if (rigidbody != null) {
-            rigidbody.isKinematic = false;
-            rigidbody.velocity = velocityMultiplier * velocity;
-        }
-
-        if(collider != null) {
-            collider.isTrigger = false;
-        }
-
+        rigidBody.isKinematic = false;
+        rigidBody.velocity = velocityMultiplier * velocity;
+        
+        sphereCollider.isTrigger = false;
+       
         thrown = true;
     }
 
@@ -51,5 +53,24 @@ public class Throwable : MonoBehaviour {
         {
             hitFloor = true;
         }
+    }
+
+    public void Reset()
+    {
+        thrown = false;
+        hitFloor = false;
+
+        rigidBody.isKinematic = true;
+        rigidBody.velocity = Vector3.zero;
+
+        sphereCollider.isTrigger = true;
+
+        fetched = true;
+        
+    }
+
+    public void ReturnThrowable()
+    {
+        fetched = false;
     }
 }

@@ -40,7 +40,9 @@ public class Resting : IState
 
         if (animal.GetEnergyLevel() >= 80f) {
             // No need to rest
-            animal.GetStateMachine().SwtichToPreviousState();
+            animal.ExitBusy();
+            //animal.GetStateMachine().SwtichToPreviousState();
+            animal.GetStateMachine().ChangeState(new WanderAround(agent, animal.GetSpeed()));
         }
     }
 
