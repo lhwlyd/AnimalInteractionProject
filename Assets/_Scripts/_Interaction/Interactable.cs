@@ -101,7 +101,7 @@ public class Interactable : MonoBehaviour
 
         var currPos = PettingObjectRef.transform.position;
 
-        velocity = Gesture.GetVelocity();//(currPos - previousPos) / Time.deltaTime;
+        velocity = (currPos - previousPos) / Time.deltaTime;
 
         previousPos = currPos;
 
@@ -109,7 +109,7 @@ public class Interactable : MonoBehaviour
         var angle = Vector3.Angle(velocity, transform.forward);
         var petted = angle >= 140;
         var mag = Vector3.Magnitude(velocity);
-        Debug.Log("interaction angle : " + angle);
+        Debug.Log("interaction: " + velocity);
         //Debug.Break();
         if(!OnPet(petted, mag))
             OnInjure(mag);
