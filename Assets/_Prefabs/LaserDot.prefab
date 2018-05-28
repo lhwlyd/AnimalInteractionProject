@@ -21,7 +21,6 @@ GameObject:
   - component: {fileID: 4299318485190462}
   - component: {fileID: 198819030594189816}
   - component: {fileID: 199266196771984070}
-  - component: {fileID: 114475500272976750}
   - component: {fileID: 135575387149020778}
   m_Layer: 2
   m_Name: LaserDot
@@ -43,19 +42,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
---- !u!114 &114475500272976750
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1982230906932250}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 56f1b3e2bd8c75c4fa369f70902b5e4b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  animals:
-  - {fileID: 0}
 --- !u!135 &135575387149020778
 SphereCollider:
   m_ObjectHideFlags: 1

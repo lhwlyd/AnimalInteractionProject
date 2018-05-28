@@ -8,7 +8,7 @@ public class Grabbed : IState
 {
     NavMeshAgent agent;
     private Animation anim;
-    private const string animationStr = "Arm_cock|idle_2";
+    private const string animationStr = "Arm_cock|idle_1";
 
     public Grabbed(NavMeshAgent agent) {
         this.agent = agent;

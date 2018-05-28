@@ -1,19 +1,22 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class LaserPen : MonoBehaviour {
 
     public GameObject laser;
     public float offset = 0.1f;
 
-    private GameObject laserInstance;
+    private GameObject laserDot;
 
     public LineRenderer laserLine;
 
+    public List<BaseAnimal> animals;
+
 	// Use this for initialization
 	void Start () {
-		
+        animals = FindObjectsOfType<BaseAnimal>().ToList();
 	}
 	
 	// Update is called once per frame
@@ -21,19 +24,15 @@ public class LaserPen : MonoBehaviour {
         RaycastHit hit;
         if (Physics.Raycast(transform.position, transform.up, out hit))
         { // all layers except the second layer(ignore ray cast)
-            //Debug.Log(hit.point.magnitude);
-            //Debug.Log(hit.point);
-            //if (hit.point.magnitude == 0) {
-            //    laserLine.gameObject.SetActive(false);
-            //    return;
-            //}
-            if (laserInstance == null)
+            
+            if (laserDot == null)
             {
-                laserInstance = Instantiate(laser, hit.point + hit.normal * offset, Quaternion.identity) as GameObject;
+                laserDot = Instantiate(laser, hit.point + hit.normal * offset, Quaternion.identity) as GameObject;
             }
             else
             {
-                laserInstance.transform.position = hit.point + hit.normal * offset;
+                laserDot.SetActive(true);
+                laserDot.transform.position = hit.point + hit.normal * offset;
             }
 
             if (laserLine != null)
@@ -42,12 +41,12 @@ public class LaserPen : MonoBehaviour {
                 laserLine.SetPosition(0, transform.position);
                 laserLine.SetPosition(1, hit.point);
             }
-            
+
+            gameObject.SendMessage("Test");
         }
         else {
-            //Debug.Log("NOT HITTING ANYTHING");
             laserLine.gameObject.SetActive(false);
-            if(laserInstance) Destroy(laserInstance.gameObject);
+            if (laserDot != null) laserDot.SetActive(false);
         }
 
     }

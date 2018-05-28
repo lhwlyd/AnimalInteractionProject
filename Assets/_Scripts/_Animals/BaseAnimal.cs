@@ -157,4 +157,9 @@ public abstract class BaseAnimal : MonoBehaviour {
     public StateMachine GetStateMachine() {
         return stateMachine;
     }
+
+    void Test()
+    {
+        Debug.Log("TEST TEST TEST TEST");
+    }
 } 
