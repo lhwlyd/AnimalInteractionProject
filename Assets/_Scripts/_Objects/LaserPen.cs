@@ -39,7 +39,7 @@ public class LaserPen : MonoBehaviour {
             }
 
             if(animalManager != null && hit.transform.CompareTag("Floor"))
-                animalManager.BroadcastEventToAnimals("OnLaser");
+                animalManager.BroadcastEventToAnimals<Vector3>("OnLaser", hit.point);
         }
         else {
             laserLine.gameObject.SetActive(false);

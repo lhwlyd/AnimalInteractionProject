@@ -132,9 +132,6 @@ public abstract class BaseAnimal : MonoBehaviour {
 
             case BusyType.Ingesting:
                 break;
-
-            case BusyType.ChasingLaser:
-                break;
         }
 
     }
@@ -162,8 +159,13 @@ public abstract class BaseAnimal : MonoBehaviour {
         return stateMachine;
     }
 
-    void OnLaser()
+    void OnLaser(Vector3 point)
     {
-        Debug.Log("Activate laser chasing state here");
+        if (!isBusy)
+        {
+            Debug.Log("Activate laser chasing state here");
+            Debug.Log(point);
+            agent.SetDestination(point);
+        }
     }
 } 

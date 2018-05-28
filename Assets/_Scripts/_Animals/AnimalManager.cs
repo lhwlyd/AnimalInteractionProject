@@ -18,5 +18,12 @@ public class AnimalManager : MonoBehaviour {
             animal.gameObject.SendMessage(eventName);
         }
     }
+
+    public void BroadcastEventToAnimals<T>(string eventName, T arg) {
+        foreach(var animal in animals)
+        {
+            animal.gameObject.SendMessage(eventName, arg);
+        }
+    }
 	
 }
