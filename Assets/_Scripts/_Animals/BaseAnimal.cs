@@ -113,6 +113,10 @@ public abstract class BaseAnimal : MonoBehaviour {
         return aggressionLevel;
     }
 
+    public NavMeshAgent GetAgent() {
+        return agent;
+    }
+
     public void SetBusy(BusyType busyType) {
         isBusy = true;
         switch (busyType) {

@@ -12,7 +12,7 @@ public class SearchForFun : IState
     private NavMeshAgent agent;
     private WanderAround wanderAround;
 
-    public SearchForFun(LayerMask searchLayer, BaseAnimal animal, float searchRadius,
+    public SearchForFun(LayerMask searchLayer, BaseAnimal animal, float searchRadius, // don't need the radius now
         string tagToLookFor, NavMeshAgent agent) {
 
         this.searchLayer = searchLayer;
@@ -28,21 +28,7 @@ public class SearchForFun : IState
 
     public void Execute()
     {
-        var hitObjects = Physics.OverlapSphere(animal.gameObject.transform.position,
-            searchRadius, searchLayer);
-        if (hitObjects.Length == 0)
-        {
-            // Just wandering around if no food given
-            if (animal.GetEnergyLevel() < 20f)
-            {
-                // resting.Execute(); // Can't do this, because the energy level will just float above and below 20f
-            }
-            else
-            {
-                wanderAround.Execute();
-            }
-            return;
-        }
+        // Find the laser dot using the tag.
     }
 
     public void Exit()

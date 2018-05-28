@@ -21,7 +21,7 @@ public class LaserPen : MonoBehaviour {
         RaycastHit hit;
         if (Physics.Raycast(transform.position, transform.up, out hit))
         { // all layers except the second layer(ignore ray cast)
-            Debug.Log(hit.point.magnitude);
+            //Debug.Log(hit.point.magnitude);
             //Debug.Log(hit.point);
             //if (hit.point.magnitude == 0) {
             //    laserLine.gameObject.SetActive(false);
@@ -45,7 +45,7 @@ public class LaserPen : MonoBehaviour {
             
         }
         else {
-            Debug.Log("NOT HITTING ANYTHING");
+            //Debug.Log("NOT HITTING ANYTHING");
             laserLine.gameObject.SetActive(false);
             if(laserInstance) Destroy(laserInstance.gameObject);
         }
