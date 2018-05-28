@@ -33,7 +33,8 @@ public abstract class BaseAnimal : MonoBehaviour {
         Hurt,
         Ingesting,
         SearchingForResource,
-        Resting
+        Resting,
+        ChasingLaser
     };
 
     protected NavMeshAgent agent;
@@ -131,6 +132,9 @@ public abstract class BaseAnimal : MonoBehaviour {
 
             case BusyType.Ingesting:
                 break;
+
+            case BusyType.ChasingLaser:
+                break;
         }
 
     }
@@ -158,8 +162,8 @@ public abstract class BaseAnimal : MonoBehaviour {
         return stateMachine;
     }
 
-    void Test()
+    void OnLaser()
     {
-        Debug.Log("TEST TEST TEST TEST");
+        Debug.Log("Activate laser chasing state here");
     }
 } 

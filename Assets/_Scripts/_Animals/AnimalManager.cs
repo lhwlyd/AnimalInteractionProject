@@ -1,16 +1,22 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class AnimalManager : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-		
-	}
+    public List<BaseAnimal> animals;
+
+    // Use this for initialization
+    void Start () {
+        animals = FindObjectsOfType<BaseAnimal>().ToList();
+    }
 	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    public void BroadcastEventToAnimals(string eventName)
+    {
+        foreach(var animal in animals)
+        {
+            animal.gameObject.SendMessage(eventName);
+        }
+    }
+	
 }

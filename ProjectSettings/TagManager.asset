@@ -12,6 +12,7 @@ TagManager:
   - particle_hearts
   - particle_injure
   - Floor
+  - Director
   layers:
   - Default
   - TransparentFX

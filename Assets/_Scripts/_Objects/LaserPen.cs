@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using System.Linq;
+﻿using UnityEngine;
 
 public class LaserPen : MonoBehaviour {
 
@@ -12,15 +9,14 @@ public class LaserPen : MonoBehaviour {
 
     public LineRenderer laserLine;
 
-    public List<BaseAnimal> animals;
+    public AnimalManager animalManager;
 
-	// Use this for initialization
-	void Start () {
-        animals = FindObjectsOfType<BaseAnimal>().ToList();
-	}
-	
-	// Update is called once per frame
-	void Update () {
+    void Start() {
+        animalManager = GameObject.Find("Director").GetComponent<AnimalManager>();
+    }
+
+    // Update is called once per frame
+    void Update () {
         RaycastHit hit;
         if (Physics.Raycast(transform.position, transform.up, out hit))
         { // all layers except the second layer(ignore ray cast)
@@ -42,7 +38,8 @@ public class LaserPen : MonoBehaviour {
                 laserLine.SetPosition(1, hit.point);
             }
 
-            gameObject.SendMessage("Test");
+            if(animalManager != null && hit.transform.CompareTag("Floor"))
+                animalManager.BroadcastEventToAnimals("OnLaser");
         }
         else {
             laserLine.gameObject.SetActive(false);
