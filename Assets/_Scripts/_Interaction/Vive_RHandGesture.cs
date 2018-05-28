@@ -13,8 +13,6 @@ public class Vive_RHandGesture : MonoBehaviour, IHandGesture
     private void Update()
     {
         previousPos = transform.position;
-        Debug.Log("Right is grabbing: " + IsGrabbing());
-        Debug.Log("Right palm open: " + IsPalmOpen());
     }
 
     public Vector3 GetVelocity()
@@ -27,11 +25,11 @@ public class Vive_RHandGesture : MonoBehaviour, IHandGesture
 
     public bool IsGrabbing()
     {
-        return SteamVR_Controller.Input(1).GetHairTriggerDown();
+        return SteamVR_Controller.Input(1).GetHairTrigger();
     }
 
     public bool IsPalmOpen()
     {
-        return SteamVR_Controller.Input(1).GetHairTriggerUp();
+        return !SteamVR_Controller.Input(1).GetHairTrigger();
     }
 }
