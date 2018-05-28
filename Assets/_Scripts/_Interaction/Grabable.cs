@@ -135,8 +135,8 @@ public class Grabable : MonoBehaviour
 
     private IHandGesture GetHandGesture(GameObject HandRef)
     {
-        var LHandGestureRef = HandRef.GetComponent<Touch_LHandGesture>();
-        var RHandGestureRef = HandRef.GetComponent<Touch_RHandGesture>();
+        var LHandGestureRef = HandRef.GetComponent<IHandGesture>();
+        var RHandGestureRef = HandRef.GetComponent<IHandGesture>();
 
         if (LHandGestureRef != null) return LHandGestureRef;
         if (RHandGestureRef != null) return RHandGestureRef;

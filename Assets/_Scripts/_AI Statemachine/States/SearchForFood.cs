@@ -28,7 +28,7 @@ public class SearchForFood : IState
         anim = agent.gameObject.GetComponent<Animation>();
         if (anim != null)
         {
-            Debug.Log("set searching to loop");
+            //Debug.Log("set searching to loop");
             anim[animationStr].wrapMode = WrapMode.Loop;
         }
     }
@@ -56,7 +56,7 @@ public class SearchForFood : IState
                 if (wanderAround.ExecuteManually()) {
                     if (anim != null)
                     {
-                        Debug.Log("searching for stuff...");
+                        // Debug.Log("searching for stuff...");
                         anim.Play(animationStr);
                     }
                 }
@@ -65,7 +65,7 @@ public class SearchForFood : IState
         }
 
         if (animal.GetHungerLevel() > 80.0f) {
-            Debug.Log("no longer needs to search for food");
+            // Debug.Log("no longer needs to search for food");
             // Debug.Break();
             // animal.GetStateMachine().SwtichToPreviousState();
             animal.GetStateMachine().ChangeState(wanderAround);
@@ -100,7 +100,7 @@ public class SearchForFood : IState
 
     public void Exit()
     {
-        Debug.Log("DONE SEARCHING");
+        //Debug.Log("DONE SEARCHING");
         // animal.GetStateMachine().ChangeState(wanderAround);
     }
 }

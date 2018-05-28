@@ -11,6 +11,7 @@ TagManager:
   - Water
   - particle_hearts
   - particle_injure
+  - Floor
   layers:
   - Default
   - TransparentFX

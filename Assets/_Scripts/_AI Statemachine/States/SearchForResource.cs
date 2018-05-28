@@ -45,7 +45,7 @@ public class SearchForResource : IState
 
     public void Execute()
     {
-        Debug.Log("looking for resources");
+        //Debug.Log("looking for resources");
 
         if (animal.GetHungerLevel() < animal.GetThirstLevel())
         // So far this condition checking should be safe.

@@ -32,7 +32,7 @@ public class WanderAround : IState
     public void Execute()
     {
 
-        Debug.Log("Wandering around");
+        // Debug.Log("Wandering around");
         if (agent.isActiveAndEnabled)
         {
             if (!agent.pathPending)
