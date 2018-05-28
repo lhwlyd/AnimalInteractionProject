@@ -74,6 +74,9 @@ public class Interactable : MonoBehaviour
                 case "rightHand":
                     Interact(other.gameObject);
                     break;
+                case "pettingStick":
+                    Interact(other.gameObject);
+                    break;
             }
         }
 
@@ -98,14 +101,16 @@ public class Interactable : MonoBehaviour
 
         var currPos = PettingObjectRef.transform.position;
 
-        velocity = (currPos - previousPos) / Time.deltaTime;
+        velocity = Gesture.GetVelocity();//(currPos - previousPos) / Time.deltaTime;
 
         previousPos = currPos;
 
         var pettingVector = transform.forward;
-        var petted = Vector3.Angle(velocity, transform.forward) >= 140;
+        var angle = Vector3.Angle(velocity, transform.forward);
+        var petted = angle >= 140;
         var mag = Vector3.Magnitude(velocity);
-        //Debug.Log(mag);
+        Debug.Log("interaction angle : " + angle);
+        //Debug.Break();
         if(!OnPet(petted, mag))
             OnInjure(mag);
 

@@ -11,10 +11,17 @@ public class WaterBottle : MonoBehaviour {
     private float waterOutTimer;
     private float time;
 
+    public bool Grabbed;
+
+    public Vector3 origPos;
+    public Quaternion origRotation;
+
     private void Start()
     {
         waterLeft = 10;
         waterOutTimer = 0.1f;
+        origPos = transform.position;
+        origRotation = transform.rotation;
     }
     // Update is called once per frame
     void Update () {
@@ -32,8 +39,15 @@ public class WaterBottle : MonoBehaviour {
         }
 	}
 
-    private void OnTriggerEnter(Collider other)
+    void OnGrab()
     {
-        
+        Grabbed = true;
+    }
+
+    void OnRelease()
+    {
+        Grabbed = false;
+        transform.position = origPos;
+        transform.rotation = origRotation;
     }
 }

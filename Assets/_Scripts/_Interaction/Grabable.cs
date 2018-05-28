@@ -22,6 +22,19 @@ public class Grabable : MonoBehaviour
         animalComponentRef = GetComponent<BaseAnimal>();
     }
 
+
+    private void Update()
+    {
+        if(LGrabbingHandRef == null) {
+            LGrabbingHandRef = GameObject.FindGameObjectWithTag("leftHand");
+        }
+
+        if(RGrabbingHandRef == null)
+        {
+            RGrabbingHandRef = GameObject.FindGameObjectWithTag("rightHand");
+        }
+    }
+
     private void FixedUpdate()
     {
         // if there is a hand in the scene, and this object is ready to be grabbed...

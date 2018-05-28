@@ -11,10 +11,17 @@ public class FoodCan : MonoBehaviour {
     private float foodOutTimer;
     private float time;
 
+    public bool Grabbed;
+
+    public Vector3 origPos;
+    public Quaternion origRotation;
+
     private void Start()
     {
         foodLeft = 50;
         foodOutTimer = 0.25f;
+        origPos = transform.position;
+        origRotation = transform.rotation;
     }
     // Update is called once per frame
     void Update () {
@@ -33,8 +40,15 @@ public class FoodCan : MonoBehaviour {
         }
 	}
 
-    private void OnTriggerEnter(Collider other)
+    void OnGrab()
     {
-        
+        Grabbed = true;
+    }
+
+    void OnRelease()
+    {
+        Grabbed = false;
+        transform.position = origPos;
+        transform.rotation = origRotation;
     }
 }

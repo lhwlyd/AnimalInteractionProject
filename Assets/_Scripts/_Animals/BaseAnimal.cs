@@ -178,6 +178,7 @@ public abstract class BaseAnimal : MonoBehaviour {
     public void ExitBusyWithStateChange(IState state)
     {
         isBusy = false;
+        BusyState = BusyType.NotBusy;
         stateMachine.ChangeState(state);
     }
 
@@ -239,6 +240,7 @@ public abstract class BaseAnimal : MonoBehaviour {
         Debug.Log("Returning object to player");
 
         var pos = playerRef.transform.position;
+        pos.y = transform.position.y;
         agent.SetDestination(pos);
 
         var distance = Vector3.Distance(transform.position, pos);

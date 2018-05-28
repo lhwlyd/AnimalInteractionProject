@@ -3,7 +3,16 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - particle_hearts
+  - leftHand
+  - rightHand
+  - Floor
+  - Director
+  - Water
+  - Food
+  - particle_injure
+  - pettingStick
   layers:
   - Default
   - TransparentFX
