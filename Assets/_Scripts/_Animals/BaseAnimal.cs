@@ -186,6 +186,7 @@ public abstract class BaseAnimal : MonoBehaviour {
 
     void OnLaser(Vector3 point)
     {
+        if (BusyState != BusyType.NotBusy || IsThirsty() || IsHungry())  return;
         if (!isBusy)
         {
             Debug.Log("Activate laser chasing state here");

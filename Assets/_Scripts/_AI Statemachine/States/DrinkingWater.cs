@@ -34,6 +34,7 @@ public class DrinkingWater : IState
 
     public void Exit()
     {
+        animal.ExitBusy();
         water.StopEating(animal);
         animal.RestoreAgentState(ref agent);
         // Debug.Log(animal.name + " stopped eating");
