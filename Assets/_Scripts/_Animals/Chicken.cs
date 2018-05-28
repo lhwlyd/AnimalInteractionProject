@@ -70,8 +70,8 @@ public class Chicken : BaseAnimal
 
     private void UpdateBodyConditions() {
         UpdateEnergyLevel(Time.deltaTime * -0.2f);
-        UpdateHungerLevel(Time.deltaTime * -0.8f);
-        UpdateThirstLevel(Time.deltaTime * -0.6f);
+        UpdateHungerLevel(Time.deltaTime * -0.08f);
+        UpdateThirstLevel(Time.deltaTime * -0.06f);
     }
 
     private void OnTriggerEnter(Collider other)

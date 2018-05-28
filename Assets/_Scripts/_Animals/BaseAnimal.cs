@@ -201,25 +201,26 @@ public abstract class BaseAnimal : MonoBehaviour {
         {
             Debug.Log("Activate laser chasing state here");
             Debug.Log(point);
+            agent.ResetPath();
             agent.SetDestination(point);
         }
     }
 
     void OnFetch(Throwable other) {
-        if (IsThirsty() || IsHungry()) return;
-        if (BusyState != BusyType.NotBusy) return;
-
         Debug.Log("Fetching object at: " + other.transform.position);
-
-        if (!isBusy)
-        {
+        // if (IsThirsty() || IsHungry()) return;
+        if (BusyState == BusyType.SearchingForResource) {
+            return;
+        }
+        else {
             SetBusy(BusyType.Fetching);
         }
         var pos = other.transform.position;
 
         agent.SetDestination(pos);
-
-        if(Vector3.Distance(pos, transform.position) < 0.3)
+        var distance = Vector3.Distance(pos, transform.position);
+        Debug.Log(distance);
+        if (distance < 1.5f)
         {
 
             var fetch = transform.Find("FetchLoc");
@@ -227,8 +228,11 @@ public abstract class BaseAnimal : MonoBehaviour {
                 other.transform.parent = transform;
             else
             {
+                var scale = other.transform.localScale;
                 other.transform.position = Vector3.zero;
-                other.transform.SetParent(fetch, false);//.parent = fetch;
+                other.transform.parent = fetch;
+                other.transform.localRotation = Quaternion.identity;
+                other.transform.localPosition = Vector3.zero;
                 
             }
             other.Reset();
@@ -248,6 +252,7 @@ public abstract class BaseAnimal : MonoBehaviour {
         {
             other.ReturnThrowable();
             other.transform.parent = null;
+            
             ExitBusyWithStateChange(new WanderAround(agent, speed));
         }
     }

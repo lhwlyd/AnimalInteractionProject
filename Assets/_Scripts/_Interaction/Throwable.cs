@@ -27,10 +27,11 @@ public class Throwable : MonoBehaviour {
     {
         if (thrown && hitFloor && animalManager != null)
         {
-            animalManager.BroadcastEventToAnimals("OnFetch", this);
+            Debug.Log("should be here");
+            animalManager.BroadcastEventToAnimals<Throwable>("OnFetch", this);
         } else if(fetched && animalManager != null)
         {
-            animalManager.BroadcastEventToAnimals("OnReturnFetch", this);
+            animalManager.BroadcastEventToAnimals<Throwable>("OnReturnFetch", this);
         }
     }
 
