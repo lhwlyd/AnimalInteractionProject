@@ -72,6 +72,7 @@ public class Chicken : BaseAnimal
         UpdateEnergyLevel(Time.deltaTime * -0.2f);
         UpdateHungerLevel(Time.deltaTime * -0.08f);
         UpdateThirstLevel(Time.deltaTime * -0.06f);
+        UpdateAggresionLevel(Time.deltaTime * -0.1f);
     }
 
     private void OnTriggerEnter(Collider other)
