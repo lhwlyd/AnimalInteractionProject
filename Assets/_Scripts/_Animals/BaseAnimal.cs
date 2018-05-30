@@ -250,7 +250,7 @@ public abstract class BaseAnimal : MonoBehaviour {
             other.ReturnThrowable();
             other.transform.parent = null;
             
-            ExitBusyWithStateChange(new WanderAround(agent, speed));
+            ExitBusyWithStateChange(new WanderAround(agent, speed, this));
         }
     }
 } 

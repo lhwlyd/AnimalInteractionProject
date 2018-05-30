@@ -107,7 +107,7 @@ public class Grabable : MonoBehaviour
         grabbed = false;
         if(animalComponentRef != null) {
             // animalComponentRef.ExitBusy();
-            animalComponentRef.ExitBusyWithStateChange(new WanderAround(animalComponentRef.GetComponent<NavMeshAgent>(), animalComponentRef.GetSpeed()));
+            animalComponentRef.ExitBusyWithStateChange(new WanderAround(animalComponentRef.GetComponent<NavMeshAgent>(), animalComponentRef.GetSpeed(), animalComponentRef));
         }
     }
 

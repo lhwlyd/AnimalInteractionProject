@@ -36,7 +36,7 @@ public class Chicken : BaseAnimal
         agent = GetComponent<NavMeshAgent>();
         playerRef = GameObject.FindGameObjectWithTag("Player");
 
-        stateMachine.ChangeState(new WanderAround(agent, speed));
+        stateMachine.ChangeState(new WanderAround(agent, speed, this));
     }
 
     private void Update()

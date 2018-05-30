@@ -9,11 +9,13 @@ public class WanderAround : IState
     private float speed;
     private Animation anim;
     private const string animationStr = "Arm_cock|Walk_fast";
+    private BaseAnimal animal;
 
-    public WanderAround(NavMeshAgent agent, float speed) {
+    public WanderAround(NavMeshAgent agent, float speed, BaseAnimal animal) {
         this.agent = agent;
         this.speed = speed;
         anim = agent.gameObject.GetComponent<Animation>();
+        this.animal = animal;
         if (anim != null) {
             anim[animationStr].wrapMode = WrapMode.Loop;
         }
@@ -100,9 +102,12 @@ public class WanderAround : IState
     }
 
     private bool MoveToNewPlace() {
+
+        float radius = (110 - animal.GetIntimateLevel()) * 1/5;
         Vector3 point;
-        if (RandomPoint(agent.gameObject.transform.position, speed * 5f, out point))
+        if (RandomPoint(agent.gameObject.transform.position, radius, out point))
         {
+            Debug.Log("radius is : " + radius);
             Debug.DrawRay(point, Vector3.up, Color.blue, 1.0f);
         }
 

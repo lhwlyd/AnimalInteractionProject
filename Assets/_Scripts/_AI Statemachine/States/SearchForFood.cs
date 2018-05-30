@@ -35,7 +35,7 @@ public class SearchForFood : IState
 
     public void Enter()
     {
-        wanderAround = new WanderAround(agent, agent.speed);
+        wanderAround = new WanderAround(agent, agent.speed, animal);
         resting = new Resting(animal, agent);
     }
 
