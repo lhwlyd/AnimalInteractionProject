@@ -44,7 +44,7 @@ public class Resting : IState
             // No need to rest
             animal.ExitBusy();
             //animal.GetStateMachine().SwtichToPreviousState();
-            animal.GetStateMachine().ChangeState(new WanderAround(agent, animal.GetSpeed()));
+            animal.GetStateMachine().ChangeState(new WanderAround(agent, animal.GetSpeed(), animal));
         }
     }
 

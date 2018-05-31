@@ -35,7 +35,7 @@ public class SearchForResource : IState
 
     public void Enter()
     {
-        wanderAround = new WanderAround(agent, agent.speed);
+        wanderAround = new WanderAround(agent, agent.speed, animal);
 
         searchForFood = new SearchForFood(searchLayer1, animal, searchRadius, "Food", agent, foodConsumingRate);
         searchForWater = new SearchForWater(searchLayer2, animal, searchRadius, "Water", agent, waterConsumingRate);
@@ -60,7 +60,7 @@ public class SearchForResource : IState
         }
         else
         {
-            animal.GetStateMachine().ChangeState(new WanderAround(agent, animal.GetSpeed()));
+            animal.GetStateMachine().ChangeState(new WanderAround(agent, animal.GetSpeed(), animal));
         }
     }
 

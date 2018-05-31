@@ -109,7 +109,7 @@ public class Interactable : MonoBehaviour
         var angle = Vector3.Angle(velocity, transform.forward);
         var petted = angle >= 140;
         var mag = Vector3.Magnitude(velocity);
-        Debug.Log("interaction: " + velocity);
+        // Debug.Log("interaction: " + velocity);
         //Debug.Break();
         if(!OnPet(petted, mag))
             OnInjure(mag);
@@ -129,8 +129,8 @@ public class Interactable : MonoBehaviour
             CancelInjuring();
             petTime = 0.0f;
             HeartParticleObject.SetActive(true);
-            animalComponentRef.UpdateAggresionLevel(-0.025f);
-            animalComponentRef.UpdateIntimateLevel(0.025f);
+            animalComponentRef.UpdateAggresionLevel(-0.05f);
+            animalComponentRef.UpdateIntimateLevel(0.05f);
             return true;
         }
         return false;
@@ -143,8 +143,8 @@ public class Interactable : MonoBehaviour
             CancelPetting();
             injureTime = 0.0f;
             InjureParticleObject.SetActive(true);
-            animalComponentRef.UpdateAggresionLevel(0.025f);
-            animalComponentRef.UpdateIntimateLevel(-0.025f);
+            animalComponentRef.UpdateAggresionLevel(0.05f);
+            animalComponentRef.UpdateIntimateLevel(-1.25f);
             return true;
         }
         return false;

@@ -86,6 +86,8 @@ public abstract class BaseAnimal : MonoBehaviour {
 
     public void UpdateHungerLevel(float update) {
         hungerLevel += update;
+        if (hungerLevel > 100) hungerLevel = 100;
+        if (hungerLevel < 0) hungerLevel = 0;
     }
 
     public float GetThirstLevel()
@@ -96,10 +98,14 @@ public abstract class BaseAnimal : MonoBehaviour {
     public void UpdateThirstLevel(float update)
     {
         thirstLevel += update;
+        if (thirstLevel > 100) thirstLevel = 100;
+        if (thirstLevel < 0) thirstLevel = 0;
     }
 
     public void UpdateEnergyLevel(float update) {
         energyLevel += update;
+        if (energyLevel > 100) energyLevel = 100;
+        if (energyLevel < 0) energyLevel = 0;
     }
 
     public float GetEnergyLevel() {
@@ -108,6 +114,8 @@ public abstract class BaseAnimal : MonoBehaviour {
 
     public void UpdateIntimateLevel(float update) {
         intimateLevel += update;
+        if (intimateLevel > 100) intimateLevel = 100;
+        if (intimateLevel < 0) intimateLevel = 0;
     }
 
     public float GetIntimateLevel() {
@@ -121,6 +129,8 @@ public abstract class BaseAnimal : MonoBehaviour {
 
     public void UpdateAggresionLevel(float update) {
         aggressionLevel += update;
+        if (aggressionLevel > 100) aggressionLevel = 100;
+        if (aggressionLevel < 0) aggressionLevel = 0;
     }
 
     public float GetAggression() {
@@ -250,7 +260,7 @@ public abstract class BaseAnimal : MonoBehaviour {
             other.ReturnThrowable();
             other.transform.parent = null;
             
-            ExitBusyWithStateChange(new WanderAround(agent, speed));
+            ExitBusyWithStateChange(new WanderAround(agent, speed, this));
         }
     }
 } 
