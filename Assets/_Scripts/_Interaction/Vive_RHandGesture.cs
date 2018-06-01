@@ -25,11 +25,11 @@ public class Vive_RHandGesture : MonoBehaviour, IHandGesture
 
     public bool IsGrabbing()
     {
-        return SteamVR_Controller.Input(1).GetHairTrigger();
+        return SteamVR_Controller.Input(2).GetHairTrigger();
     }
 
     public bool IsPalmOpen()
     {
-        return !SteamVR_Controller.Input(1).GetHairTrigger();
+        return !SteamVR_Controller.Input(2).GetHairTrigger();
     }
 }
